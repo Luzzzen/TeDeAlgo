@@ -3,31 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Escritura</title>
+<title>Escritura - Té de Algo</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IM+Fell+English:ital@0;1&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --paper: #f7f4ee; /* Sepia suave */
-    --ink: #1a1a1a;
-    --ink-soft: #555;
-    --ink-ghost: #b0b0b0; /* Un gris más suave */
-    --accent: #2a3c2a; /* Verde oscuro forestal del logo */
-    --shadow: rgba(0,0,0,0.06);
-    --page-width: 680px;
+    --app-bg: #e3ded5;      /* Fondo exterior más envolvente y suave */
+    --paper: #fbf9f5;       /* Papel editorial de alta calidad */
+    --ink: #1e1e1e;
+    --ink-soft: #605e59;
+    --ink-ghost: #b5b2aa;
+    --accent: #2e432e;      /* Verde bosque profundo y elegante del logo */
+    --page-width: 720px;
   }
 
   html, body {
-    background: #e8e4dc; /* Fondo de la app más oscuro */
+    background: var(--app-bg);
     min-height: 100vh;
     font-family: 'EB Garamond', Georgia, serif;
     color: var(--ink);
-    transition: background 0.3s;
+    scroll-behavior: smooth;
+    transition: background 0.5s ease;
   }
 
-  /* ── BARRA SUPERIOR ── */
+  /* ── BARRA SUPERIOR PREMIUM (GLASSMORPHISM) ── */
   #toolbar {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -35,16 +36,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 24px;
-    background: #ddd8cd;
-    border-bottom: 1px solid #c8c2b4;
-    gap: 12px;
+    padding: 12px 32px;
+    background: rgba(227, 222, 213, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Ocultar barra al escribir (Modo distracción libre) */
+  #toolbar.hide {
+    transform: translateY(-100%);
+  }
+  #toolbar:hover {
+    transform: translateY(0) !important;
   }
 
   #toolbar-left, #toolbar-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
   }
 
   .btn {
@@ -52,86 +63,97 @@
     font-size: 14px;
     color: var(--ink-soft);
     background: transparent;
-    border: 1px solid #bbb;
-    border-radius: 3px;
-    padding: 5px 13px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 6px 14px;
     cursor: pointer;
-    transition: all .15s;
-    white-space: nowrap;
+    transition: all .2s ease;
   }
-  .btn:hover { background: #ccc8be; color: var(--ink); border-color: #999; }
+  .btn:hover { 
+    background: rgba(0, 0, 0, 0.04); 
+    color: var(--ink); 
+    border-color: rgba(0, 0, 0, 0.3); 
+  }
   .btn.primary {
     background: var(--accent);
     border-color: var(--accent);
     color: #fff;
   }
-  .btn.primary:hover { background: #1c271c; }
+  .btn.primary:hover { background: #1f2e1f; border-color: #1f2e1f; }
 
   #btn-focus {
-    color: #fff;
-    background: #8e9e8e; /* Un verde intermedio para el estado 'apagado' */
-    border-color: #8e9e8e;
+    border-color: transparent;
+    background: rgba(46, 67, 46, 0.08);
+    color: var(--accent);
+    font-weight: 500;
   }
-  #btn-focus:hover { background: #7a897a; }
+  #btn-focus:hover { background: rgba(46, 67, 46, 0.15); }
+  
   body.focus-mode #btn-focus {
     background: var(--accent);
-    border-color: var(--accent);
+    color: #fff;
   }
 
   #book-title-bar {
     font-family: 'IM Fell English', serif;
     font-size: 16px;
+    letter-spacing: 0.03em;
     color: var(--ink);
     background: transparent;
     border: none;
     outline: none;
     text-align: center;
-    min-width: 200px;
-    max-width: 340px;
+    min-width: 240px;
+    max-width: 380px;
     flex: 1;
   }
   #book-title-bar::placeholder { color: var(--ink-ghost); font-style: italic; }
 
   #wordcount {
-    font-size: 13px;
-    color: var(--ink-ghost);
+    font-size: 14px;
+    color: var(--ink-soft);
     font-variant-numeric: tabular-nums;
-    min-width: 80px;
-    text-align: right;
+    letter-spacing: 0.02em;
   }
 
-  /* ── CONTENIDO ── */
+  /* ── CONTENEDOR UNIFICADO (MANUSCRITO) ── */
   #main {
     max-width: var(--page-width);
-    margin: 0 auto;
-    padding: 10px 0 120px;
+    margin: 80px auto 120px;
+    background: var(--paper);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
+    border-radius: 6px;
+    padding: 90px 90px 100px;
+    transition: all 0.5s ease;
   }
 
-  /* ── LOGO DE CABECERA (Welcome) ── */
+  /* Cabecera integrada y limpia */
   #header-logo-wrap {
     text-align: center;
-    padding: 40px 0 30px;
+    margin-bottom: 60px;
+    transition: opacity 0.4s, transform 0.4s;
   }
   #header-logo-wrap img {
-    max-width: 140px;
+    max-width: 150px;
     height: auto;
+    /* TRUCO VISUAL: Quita el fondo blanco del logo PNG de forma dinámica */
+    mix-blend-mode: multiply; 
     display: inline-block;
   }
 
-  /* ── PORTADA ── */
+  /* ── AREA PORTADA SEAMLESS ── */
   #cover {
-    background: var(--paper);
-    box-shadow: 0 2px 18px var(--shadow);
-    padding: 80px 64px 64px;
-    margin-bottom: 2px;
     text-align: center;
-    border-bottom: 1px solid #e0dbd0;
+    padding-bottom: 60px;
+    margin-bottom: 40px;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+    transition: opacity 0.4s, transform 0.4s;
   }
 
   #cover-title {
     font-family: 'IM Fell English', serif;
-    font-size: 42px;
-    line-height: 1.2;
+    font-size: 46px;
+    line-height: 1.25;
     color: var(--ink);
     background: transparent;
     border: none;
@@ -142,79 +164,76 @@
     overflow: hidden;
     min-height: 60px;
   }
-  #cover-title::placeholder { color: var(--ink-ghost); font-style: italic; }
+  #cover-title::placeholder { color: var(--ink-ghost); font-style: dashed; }
 
   #cover-author {
     font-family: 'EB Garamond', serif;
-    font-size: 20px;
+    font-size: 22px;
     color: var(--ink-soft);
     background: transparent;
     border: none;
     outline: none;
     text-align: center;
     width: 100%;
-    margin-top: 28px;
+    margin-top: 24px;
     font-style: italic;
   }
   #cover-author::placeholder { color: var(--ink-ghost); }
 
   .cover-divider {
-    width: 60px;
+    width: 40px;
     height: 1px;
     background: var(--accent);
-    margin: 28px auto;
-    opacity: .6;
+    margin: 32px auto;
+    opacity: .4;
   }
 
-  /* ── CAPÍTULOS ── */
+  /* ── BLOQUES DE CAPÍTULO CONTINUOS ── */
+  #chapters {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
   .chapter {
-    background: var(--paper);
-    box-shadow: 0 2px 18px var(--shadow);
-    padding: 64px 64px 56px;
-    margin-bottom: 2px;
     position: relative;
-    transition: all 0.3s;
+    transition: opacity 0.4s, transform 0.4s;
   }
 
   .chapter-header {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 36px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
   }
 
   .chapter-num {
     font-family: 'IM Fell English', serif;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--accent);
     letter-spacing: .08em;
     text-transform: uppercase;
-    padding-top: 6px;
     white-space: nowrap;
-    min-width: 80px;
     font-style: italic;
   }
 
   .chapter-title-input {
     font-family: 'IM Fell English', serif;
-    font-size: 26px;
+    font-size: 24px;
     color: var(--ink);
     background: transparent;
     border: none;
     outline: none;
     width: 100%;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 4px;
-    transition: border-color .2s;
+    padding-bottom: 2px;
     line-height: 1.3;
   }
-  .chapter-title-input:focus { border-bottom-color: var(--ink-ghost); }
   .chapter-title-input::placeholder { color: var(--ink-ghost); font-style: italic; }
 
   .chapter-body {
     font-family: 'EB Garamond', serif;
-    font-size: 18px;
-    line-height: 1.85;
+    font-size: 19px;
+    line-height: 1.95; /* Espaciado premium de lectura */
     color: var(--ink);
     background: transparent;
     border: none;
@@ -222,49 +241,46 @@
     width: 100%;
     resize: none;
     overflow: hidden;
-    min-height: 260px;
-    text-indent: 0;
+    min-height: 200px;
+    text-align: justify;
   }
-  .chapter-body:first-of-type { text-indent: 0; }
   .chapter-body::placeholder { color: var(--ink-ghost); font-style: italic; }
 
   .chapter-delete {
     position: absolute;
-    top: 18px;
-    right: 20px;
+    top: -4px;
+    right: -40px;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--ink-ghost);
-    font-size: 18px;
-    line-height: 1;
-    padding: 4px 6px;
-    border-radius: 3px;
-    transition: all .15s;
+    font-size: 20px;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all .2s ease;
     opacity: 0;
   }
   .chapter:hover .chapter-delete { opacity: 1; }
-  .chapter-delete:hover { color: #c0392b; background: #fdecea; }
+  .chapter-delete:hover { color: #c0392b; background: rgba(192, 57, 43, 0.08); }
 
   /* ── BOTÓN AGREGAR CAPÍTULO ── */
   #add-chapter-wrap {
     text-align: center;
-    padding: 32px 0 0;
+    padding: 60px 0 20px;
+    transition: opacity 0.4s;
   }
 
   #add-chapter {
     font-family: 'EB Garamond', serif;
-    font-size: 28px;
-    width: 44px;
-    height: 44px;
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: var(--paper);
-    border: 1px solid #c8c2b4;
-    color: var(--accent);
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: var(--ink-soft);
     cursor: pointer;
-    box-shadow: 0 1px 6px var(--shadow);
-    transition: all .2s;
-    line-height: 1;
+    transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -273,118 +289,73 @@
     background: var(--accent);
     color: #fff;
     border-color: var(--accent);
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
 
-  /* ── MODO DE ENFOQUE (Focus Mode) ── */
+  /* ── MODO ENFOQUE EXTREMO (ZEN) ── */
   body.focus-mode {
-    background: #d4d1cc; /* Un fondo más tenue */
+    background: #dbd6cc; /* Entorno más inmersivo */
   }
-  body.focus-mode .chapter-body {
-    opacity: 0.15; /* Dim everything */
-    transition: opacity 0.2s;
+  body.focus-mode #main {
+    box-shadow: none;
+    background: transparent; /* El papel se funde con el fondo */
   }
-  body.focus-mode .chapter-body:focus {
-    opacity: 1; /* Highlight focused textarea */
-    color: var(--accent); /* Cambiar color del texto enfocado */
+  body.focus-mode #header-logo-wrap,
+  body.focus-mode #cover,
+  body.focus-mode #add-chapter-wrap {
+    opacity: 0 !important;
+    pointer-events: none;
+    transform: translateY(10px);
   }
-  body.focus-mode textarea:focus, body.focus-mode input:focus {
-     /* Asegurar que las otras textareas de portada también funcionen */
-     opacity: 1 !important;
+  body.focus-mode .chapter {
+    opacity: 0.06;
+    transform: scale(0.98);
+    pointer-events: none;
+  }
+  body.focus-mode .chapter.active-focus {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    pointer-events: auto;
   }
 
-  /* ── AYUDA MEMORIA DE ATAJOS ── */
+  /* ── AYUDA MEMORIA FLOTANTE MINIMALISTA ── */
   #hotkey-help-wrap {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    opacity: 0.3; /* Transparent but visible */
-    transition: opacity 0.3s;
+    bottom: 24px;
+    left: 32px;
+    opacity: 0.25;
+    transition: opacity 0.3s, transform 0.4s;
     z-index: 150;
-    pointer-events: none; /* No clica */
+    pointer-events: none;
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
-  #hotkey-help-wrap:hover { opacity: 0.8; }
-  #hotkey-help-wrap i { font-style: italic; }
-
-  /* ── MODAL (no se usa por ahora) ── */
-  #modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.45);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-  }
-  #modal-overlay.open { display: flex; }
-
-  #modal {
-    background: var(--paper);
-    border-radius: 4px;
-    padding: 32px 40px;
-    max-width: 420px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 8px 40px rgba(0,0,0,.18);
-  }
-  #modal h2 {
-    font-family: 'IM Fell English', serif;
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-  #modal p {
-    font-size: 15px;
-    color: var(--ink-soft);
-    margin-bottom: 24px;
-    line-height: 1.5;
-  }
-  #modal .btn-row {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
+  #hotkey-help-wrap.hide {
+    opacity: 0 !important;
+    transform: translateY(20px);
   }
 
-  /* ── PRINT / PDF EXPORT (Book Format) ── */
+  /* ── PRINT / EXPORT LIBRO FORMATEADO ── */
   @media print {
-    /* Ocultar elementos de la interfaz */
     #toolbar, #header-logo-wrap, #add-chapter-wrap, .chapter-delete, #hotkey-help-wrap {
         display: none !important;
     }
-
     body { background: white !important; }
-    #main { padding: 0 !important; max-width: 100% !important; margin: 0 !important;}
-    .chapter, #cover { box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important;}
-
-    /* Formateo de página */
-    @page {
-        size: A5; /* Formato libro */
-        margin: 20mm 15mm;
-    }
-
-    /* Salto de página antes de la portada y antes de cada capítulo */
-    #cover { page-break-after: always; text-align: center; margin-top: 60mm; }
+    #main { padding: 0 !important; max-width: 100% !important; margin: 0 !important; box-shadow: none !important;}
     .chapter { page-break-before: always; margin-top: 40mm;}
-
-    /* Estilos de libro */
-    .chapter-body, .cover-author, h1, .chapter-title-input { color: black !important;}
-    .chapter-num { color: black !important; font-style: italic; }
-
-    /* Los párrafos en la exportación HTML limpia deben tener sangría */
+    #cover { page-break-after: always; margin-top: 60mm; border: none; }
     p { margin-bottom: 0; text-indent: 2em; }
     h1 + p, h2 + p, hr + p, p:first-of-type { text-indent: 0; }
-
+    @page { size: A5; margin: 22mm 18mm; }
   }
 
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #e0dbd0; }
-  ::-webkit-scrollbar-thumb { background: #c0b9ac; border-radius: 3px; }
+  /* SCROLLBAR MODERNA */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--app-bg); }
+  ::-webkit-scrollbar-thumb { background: #c5bfb3; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #b0aa9e; }
 </style>
 </head>
 <body onload="loadLocal()">
@@ -392,65 +363,81 @@
 <!-- TOOLBAR -->
 <div id="toolbar">
   <div id="toolbar-left">
-    <button class="btn primary" onclick="exportHTML()" title="↓ Descargar para compartir (Ctrl+S)">↓ Exportar</button>
-    <label class="btn" style="cursor:pointer" title="↑ Importar manuscrito (Ctrl+O)">
+    <button class="btn primary" onclick="exportHTML()" title="Descargar Manuscrito (Ctrl+S)">↓ Exportar</button>
+    <label class="btn" style="cursor:pointer" title="Cargar archivo HTML (Ctrl+O)">
       ↑ Importar
       <input type="file" accept=".html" style="display:none" onchange="importHTML(event)">
     </label>
-    <button id="btn-focus" class="btn" onclick="toggleFocusMode()" title="Atajo: Ctrl+F">Enfoque: APAGADO</button>
+    <button id="btn-focus" class="btn" onclick="toggleFocusMode()" title="Alternar Modo Zen (Ctrl+F)">Modo Zen</button>
   </div>
 
-  <input id="book-title-bar" type="text" placeholder="Título del libro…" oninput="syncTitle(this.value); updateWordCount(); saveLocal()" />
+  <input id="book-title-bar" type="text" placeholder="Título del manuscrito…" oninput="syncTitle(this.value); updateWordCount(); saveLocal()" />
 
   <div id="toolbar-right">
     <span id="wordcount">0 palabras</span>
   </div>
 </div>
 
-<!-- ATAJOS DE AYUDA MEMORIA -->
+<!-- MINI AYUDA MEMORIA -->
 <div id="hotkey-help-wrap">
-  <i>Foco: Ctrl+F</i> | <i>Nuevo Cap.: Ctrl+Ent.</i> | <i>Export.: Ctrl+S</i> | <i>Import.: Ctrl+O</i>
+  Ctrl+F: Zen | Ctrl+Enter: Cap. Nuevo | Ctrl+S: Guardar
 </div>
 
-<!-- CONTENIDO -->
+<!-- CONTENIDO PRINCIPAL (EL PLIEGO DE PAPEL) -->
 <div id="main">
 
-  <!-- CABECERA DEL LOGO (Welcome) -->
+  <!-- CABECERA DEL LOGO CON BLEND-MODE AUTOMÁTICO -->
   <div id="header-logo-wrap">
     <img src="Escribir simple. Sin distracciones. (1).png" alt="Té de Algo Logo">
   </div>
 
-  <!-- PORTADA -->
+  <!-- PORTADA SEAMLESS -->
   <div id="cover">
-    <textarea id="cover-title" rows="1" placeholder="Título" oninput="autoResize(this); syncTitleBar(this.value); updateWordCount(); saveLocal()"></textarea>
+    <textarea id="cover-title" rows="1" placeholder="Título Principal" oninput="autoResize(this); syncTitleBar(this.value); updateWordCount(); saveLocal()"></textarea>
     <div class="cover-divider"></div>
-    <input id="cover-author" type="text" placeholder="Nombre del autor" oninput="updateWordCount(); saveLocal()">
+    <input id="cover-author" type="text" placeholder="Nombre del Autor" oninput="updateWordCount(); saveLocal()">
   </div>
 
-  <!-- CAPÍTULOS -->
+  <!-- SECCIÓN DE CAPÍTULOS -->
   <div id="chapters"></div>
 
-  <!-- BOTÓN + -->
+  <!-- BOTÓN INTERNO DE AGREGAR -->
   <div id="add-chapter-wrap">
-    <button id="add-chapter" onclick="addChapter()" title="Agregar capítulo (Ctrl + Ent.)">+</button>
+    <button id="add-chapter" onclick="addChapter()" title="Nuevo Capítulo (Ctrl + Enter)">+</button>
   </div>
 
-</div>
-
-<!-- MODAL (no se usa) -->
-<div id="modal-overlay">
-  <div id="modal">
-    <h2>Exportar</h2>
-    <p>El archivo HTML puede volver a importarse acá para seguir editando.</p>
-    <div class="btn-row">
-      <button class="btn primary" onclick="doExport(); closeModal()">Descargar</button>
-      <button class="btn" onclick="closeModal()">Cancelar</button>
-    </div>
-  </div>
 </div>
 
 <script>
 let chapterCount = 0;
+let hideTimeout = null;
+
+// ── COMPORTAMIENTO INTERFAZ OCULTA (DISTRACTION-FREE) ──
+function resetHideTimer() {
+  const toolbar = document.getElementById('toolbar');
+  const help = document.getElementById('hotkey-help-wrap');
+  
+  // Mostrar elementos al mover mouse o interactuar
+  toolbar.classList.remove('hide');
+  help.classList.remove('hide');
+  
+  clearTimeout(hideTimeout);
+  
+  // Esconder tras 3.5 segundos de inactividad de escritura
+  hideTimeout = setTimeout(() => {
+    // Solo esconder si el usuario está enfocado escribiendo en el texto
+    if (document.activeElement && (document.activeElement.classList.contains('chapter-body') || document.activeElement.classList.contains('chapter-title-input'))) {
+      toolbar.classList.add('hide');
+      help.classList.add('hide');
+    }
+  }, 3500);
+}
+
+document.addEventListener('mousemove', () => {
+  document.getElementById('toolbar').classList.remove('hide');
+  document.getElementById('hotkey-help-wrap').classList.remove('hide');
+});
+document.addEventListener('input', resetHideTimer);
 
 // ── AUTO RESIZE TEXTAREA ──
 function autoResize(el) {
@@ -458,7 +445,6 @@ function autoResize(el) {
   el.style.height = el.scrollHeight + 'px';
 }
 
-// Aplica autoResize a todas las textareas al cargar
 function resizeAll() {
   document.querySelectorAll('textarea').forEach(autoResize);
 }
@@ -487,25 +473,31 @@ function addChapter(titleVal = '', bodyVal = '', forceFocus = true) {
   div.className = 'chapter';
   div.dataset.id = chapterCount;
 
-  // Número romano simple
   const num = toRoman(chapterCount);
 
   div.innerHTML = `
     <button class="chapter-delete" title="Eliminar capítulo" onclick="deleteChapter(this)">×</button>
     <div class="chapter-header">
-      <span class="chapter-num">Cap. ${num}</span>
-      <input class="chapter-title-input" type="text" placeholder="Título del capítulo (opcional)" value="${escHtml(titleVal)}" oninput="updateWordCount(); saveLocal()">
+      <span class="chapter-num">Capítulo ${num}</span>
+      <input class="chapter-title-input" type="text" placeholder="Título del capítulo (opcional)" value="${escHtml(titleVal)}" onfocus="setFocusTarget(this)" oninput="updateWordCount(); saveLocal()">
     </div>
-    <textarea class="chapter-body" placeholder="Empezá a escribir acá…" oninput="autoResize(this); updateWordCount(); saveLocal()">${escHtml(bodyVal)}</textarea>
+    <textarea class="chapter-body" placeholder="Empezá a escribir acá…" onfocus="setFocusTarget(this)" oninput="autoResize(this); updateWordCount(); saveLocal()">${escHtml(bodyVal)}</textarea>
   `;
 
   document.getElementById('chapters').appendChild(div);
 
-  // Resize textarea
   const ta = div.querySelector('.chapter-body');
   autoResize(ta);
   if (forceFocus) ta.focus();
   updateWordCount();
+}
+
+// Manejar qué elemento mantiene el foco activo en Modo Zen
+function setFocusTarget(el) {
+  if (document.body.classList.contains('focus-mode')) {
+    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
+    el.closest('.chapter').classList.add('active-focus');
+  }
 }
 
 function deleteChapter(btn) {
@@ -518,7 +510,7 @@ function deleteChapter(btn) {
 
 function renumberChapters() {
   document.querySelectorAll('.chapter').forEach((ch, i) => {
-    ch.querySelector('.chapter-num').textContent = 'Cap. ' + toRoman(i + 1);
+    ch.querySelector('.chapter-num').textContent = 'Capítulo ' + toRoman(i + 1);
   });
   chapterCount = document.querySelectorAll('.chapter').length;
 }
@@ -537,11 +529,27 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── MODO DE ENFOQUE (Focus Mode) ──
+// ── MODO ZEN AVANZADO ──
 function toggleFocusMode() {
   const isFocusMode = document.body.classList.toggle('focus-mode');
   const btnFocus = document.getElementById('btn-focus');
-  btnFocus.textContent = isFocusMode ? 'Enfoque: PRENDIDO' : 'Enfoque: APAGADO';
+  btnFocus.textContent = isFocusMode ? 'Modo Zen: ON' : 'Modo Zen';
+  
+  if (isFocusMode) {
+    const activeEl = document.activeElement;
+    if (activeEl && activeEl.closest('.chapter')) {
+      activeEl.closest('.chapter').classList.add('active-focus');
+    } else {
+      // Si no hay nada seleccionado, enfoca el primer capítulo disponible
+      const firstCh = document.querySelector('.chapter');
+      if (firstCh) {
+        firstCh.classList.add('active-focus');
+        firstCh.querySelector('.chapter-body').focus();
+      }
+    }
+  } else {
+    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
+  }
 }
 
 // ── ATAJOS DE TECLADO ──
@@ -549,31 +557,26 @@ document.addEventListener('keydown', e => {
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const modifier = isMac ? e.metaKey : e.ctrlKey;
 
-    // Ctrl + F: Modo de enfoque
     if (modifier && e.key === 'f') {
         e.preventDefault();
         toggleFocusMode();
     }
-    // Ctrl + Enter: Nuevo capítulo
     else if (modifier && e.key === 'Enter') {
         e.preventDefault();
         addChapter();
     }
-    // Ctrl + S: Exportar
     else if (modifier && e.key === 's') {
         e.preventDefault();
         exportHTML();
     }
-    // Ctrl + O: Importar
     else if (modifier && e.key === 'o') {
         e.preventDefault();
         document.querySelector('input[type="file"]').click();
     }
 });
 
-// ── AUTOSAVE (localStorage) ──
+// ── AUTOSAVE CORE ──
 function saveLocal() {
-    // Recoge capítulos
     const chapters = [];
     document.querySelectorAll('.chapter').forEach(ch => {
         chapters.push({
@@ -582,7 +585,6 @@ function saveLocal() {
         });
     });
 
-    // Guardar estructura JSON en localStorage
     localStorage.setItem('escritura_chapters_backup', JSON.stringify(chapters));
     localStorage.setItem('escritura_title_backup', document.getElementById('cover-title').value);
     localStorage.setItem('escritura_author_backup', document.getElementById('cover-author').value);
@@ -590,18 +592,15 @@ function saveLocal() {
 }
 
 function loadLocal() {
-    // Primero, chequear si hay datos locales
     const title = localStorage.getItem('escritura_title_backup');
     const author = localStorage.getItem('escritura_author_backup');
     const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
     const wordcount = localStorage.getItem('escritura_wordcount_backup');
 
     if (title || author || chaptersRaw) {
-        // Limpiar
         document.getElementById('chapters').innerHTML = '';
         chapterCount = 0;
 
-        // Cargar
         document.getElementById('cover-title').value = title || '';
         document.getElementById('cover-author').value = author || '';
         document.getElementById('book-title-bar').value = title || '';
@@ -614,21 +613,16 @@ function loadLocal() {
         chapters.forEach(ch => addChapter(ch.title, ch.body, false));
         resizeAll();
     } else {
-        // Primer capítulo vacío de bienvenida si no hay nada guardado
-        addChapter();
-        document.querySelector('.chapter-body').value = '';
-        document.querySelector('.chapter-body').placeholder = 'Empezá a escribir acá…';
-        updateWordCount();
+        addChapter('', '', false);
     }
 }
 
-// ── EXPORTAR HTML ──
+// ── EXPORTAR E IMPORTAR MANUSCRITOS ──
 function exportHTML() {
-  saveLocal(); // Asegurar guardado antes de exportar
+  saveLocal();
   const title = document.getElementById('cover-title').value || 'sin-titulo';
   const author = document.getElementById('cover-author').value || '';
 
-  // Recoge capítulos
   const chapters = [];
   document.querySelectorAll('.chapter').forEach(ch => {
     chapters.push({
@@ -649,13 +643,13 @@ function exportHTML() {
 <meta name="x-escritura-author" content="${escHtml(author)}">
 <meta name="x-escritura-chapters" content='${chaptersData.replace(/'/g,"&apos;")}'>
 <style>
-  body{font-family:'EB Garamond',Georgia,serif;max-width:640px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#f7f4ee;font-size:18px;line-height:1.85}
-  h1{font-size:36px;text-align:center;margin-bottom:8px}
+  body{font-family:'EB Garamond',Georgia,serif;max-width:640px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#fbf9f5;font-size:18px;line-height:1.95}
+  h1{font-size:38px;text-align:center;margin-bottom:8px;font-family:serif;}
   .author{text-align:center;font-style:italic;color:#555;margin-bottom:60px}
-  .chapter-num{font-size:13px;color:#2a3c2a;letter-spacing:.08em;text-transform:uppercase;font-style:italic;margin-bottom:6px}
-  h2{font-size:26px;margin-bottom:32px}
-  p{margin-bottom:0;text-indent:2em}
-  p:first-of-type{text-indent:0}
+  .chapter-num{font-size:13px;color:#2e432e;letter-spacing:.08em;text-transform:uppercase;font-style:italic;margin-bottom:6px}
+  h2{font-size:26px;margin-bottom:32px;font-family:serif;}
+  p{margin-bottom:0;text-indent:2em;text-align:justify;}
+  h1 + p, h2 + p, hr + p, p:first-of-type{text-indent:0}
   hr{border:none;border-top:1px solid #c8c2b4;margin:40px auto;width:60px}
 </style>
 </head>
@@ -664,7 +658,7 @@ function exportHTML() {
 ${author ? `<p class="author">${escHtml(author)}</p>` : ''}
 ${chapters.map((ch, i) => `
 <hr>
-<div class="chapter-num">Cap. ${toRoman(i+1)}</div>
+<div class="chapter-num">Capítulo ${toRoman(i+1)}</div>
 ${ch.title ? `<h2>${escHtml(ch.title)}</h2>` : ''}
 ${ch.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${escHtml(l)}</p>`).join('\n')}
 `).join('\n')}
@@ -674,7 +668,6 @@ ${ch.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${escHtml(l)}</p>`).join('\
   download(html, slugify(title) + '.html', 'text/html');
 }
 
-// ── IMPORTAR HTML ──
 function importHTML(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -683,10 +676,9 @@ function importHTML(event) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(e.target.result, 'text/html');
 
-    // Chequeamos si es un export nuestro
     const isExport = doc.querySelector('meta[name="x-escritura-export"]');
     if (!isExport) {
-      alert('Este archivo no parece ser un manuscrito exportado de esta aplicación.');
+      alert('Este archivo no corresponde a un export oficial.');
       return;
     }
 
@@ -697,7 +689,6 @@ function importHTML(event) {
     let chapters = [];
     try { chapters = JSON.parse(chaptersRaw); } catch(e) {}
 
-    // Limpiar y cargar
     document.getElementById('cover-title').value = title;
     document.getElementById('cover-author').value = author;
     document.getElementById('book-title-bar').value = title;
@@ -707,20 +698,14 @@ function importHTML(event) {
     chapterCount = 0;
     chapters.forEach(ch => addChapter(ch.title, ch.body, false));
     updateWordCount();
-    saveLocal(); // Guardar lo importado
+    saveLocal();
     
-    // Corregir bug de auto-resize al importar
-    setTimeout(() => {
-        resizeAll();
-    }, 50);
-
+    setTimeout(() => { resizeAll(); }, 50);
   };
   reader.readAsText(file);
-  // Reset input para permitir reimportar el mismo archivo
   event.target.value = '';
 }
 
-// ── UTILS ──
 function download(content, filename, mime) {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([content], { type: mime }));
@@ -733,12 +718,6 @@ function slugify(str) {
   return str.toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'') || 'manuscrito';
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-
-// ── INIT ──
-// Actualizar contador al escribir en cualquier lado
 document.addEventListener('input', updateWordCount);
 </script>
 </body>
