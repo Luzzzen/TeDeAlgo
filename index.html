@@ -9,29 +9,20 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── PALETAS DE COLORES (TEMAS MAX 4) ── */
   :root {
     --app-bg: #e3ded5;
     --paper: #fbf9f5;
     --ink: #1a1a1a;
     --ink-soft: #5a5750;
     --ink-ghost: #b8b4aa;
-    --accent: #2e432e; /* Verde original del logo */
+    --accent: #2e432e;
     --page-width: 700px;
   }
 
-  body.theme-editorial {
-    --app-bg: #e3ded5; --paper: #fbf9f5; --ink: #1a1a1a; --ink-soft: #5a5750; --ink-ghost: #b8b4aa; --accent: #2e432e;
-  }
-  body.theme-crema {
-    --app-bg: #ebdec9; --paper: #fffdf9; --ink: #221f1a; --ink-soft: #665f53; --ink-ghost: #c2b7a3; --accent: #8c6239;
-  }
-  body.theme-bosque {
-    --app-bg: #cbd4cb; --paper: #f3f6f3; --ink: #162216; --ink-soft: #4e5c4e; --ink-ghost: #a6b0a6; --accent: #2e432e;
-  }
-  body.theme-nocturno {
-    --app-bg: #141517; --paper: #1e2022; --ink: #e1e2e3; --ink-soft: #9aa0a6; --ink-ghost: #4f5357; --accent: #82a382;
-  }
+  body.theme-editorial { --app-bg:#e3ded5;--paper:#fbf9f5;--ink:#1a1a1a;--ink-soft:#5a5750;--ink-ghost:#b8b4aa;--accent:#2e432e; }
+  body.theme-crema     { --app-bg:#ebdec9;--paper:#fffdf9;--ink:#221f1a;--ink-soft:#665f53;--ink-ghost:#c2b7a3;--accent:#8c6239; }
+  body.theme-bosque    { --app-bg:#cbd4cb;--paper:#f3f6f3;--ink:#162216;--ink-soft:#4e5c4e;--ink-ghost:#a6b0a6;--accent:#2e432e; }
+  body.theme-nocturno  { --app-bg:#141517;--paper:#1e2022;--ink:#e1e2e3;--ink-soft:#9aa0a6;--ink-ghost:#4f5357;--accent:#a0c4a0; }
 
   html, body {
     background: var(--app-bg);
@@ -41,7 +32,7 @@
     transition: background 0.4s ease, color 0.4s ease;
   }
 
-  /* ── INTERFAZ 1: PÁGINA DE INICIO (DASHBOARD) ── */
+  /* ── DASHBOARD ── */
   #dashboard-view {
     display: flex;
     min-height: 100vh;
@@ -49,33 +40,19 @@
     justify-content: center;
     padding: 40px 20px;
   }
-  .db-card {
-    text-align: center;
-    max-width: 440px;
-    width: 100%;
-  }
-  
-  /* LOGO OPTIMIZADO (Más grande y dinámico) */
+  .db-card { text-align: center; max-width: 440px; width: 100%; }
+
   .db-logo {
-    max-width: 260px; /* Tamaño generoso solicitado */
+    max-width: 260px;
     width: 100%;
     height: auto;
     mix-blend-mode: multiply;
     margin-bottom: 40px;
     transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
-  /* Inversión perfecta para el modo oscuro */
-  body.theme-nocturno .db-logo {
-    filter: invert(1) brightness(1.2);
-    mix-blend-mode: screen;
-  }
+  body.theme-nocturno .db-logo { filter: invert(1) brightness(1.2); mix-blend-mode: screen; }
 
-  .db-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 48px;
-  }
+  .db-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; }
   .db-btn {
     font-family: 'Literata', serif;
     font-size: 16px;
@@ -89,19 +66,10 @@
     text-align: center;
   }
   body.theme-nocturno .db-btn { border-color: rgba(255,255,255,0.08); }
-  .db-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    border-color: var(--ink-soft);
-  }
-  .db-btn.primary {
-    background: var(--accent);
-    color: var(--paper);
-    border-color: var(--accent);
-  }
-  .db-btn.primary:hover { opacity: 0.95; }
+  .db-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-color: var(--ink-soft); }
+  .db-btn.primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  .db-btn.primary:hover { opacity: 0.9; }
 
-  /* Selector de Temas */
   .theme-section h3 {
     font-size: 13px;
     text-transform: uppercase;
@@ -110,14 +78,9 @@
     margin-bottom: 16px;
     font-weight: 500;
   }
-  .theme-options {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
+  .theme-options { display: flex; justify-content: center; gap: 16px; }
   .theme-dot {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid transparent;
@@ -127,16 +90,13 @@
   .theme-dot:hover { transform: scale(1.15); }
   .theme-dot.active { border-color: var(--accent); transform: scale(1.1); }
   .dot-editorial { background: #fbf9f5; }
-  .dot-crema { background: #fffdf9; }
-  .dot-bosque { background: #f3f6f3; }
-  .dot-nocturno { background: #1e2022; }
+  .dot-crema     { background: #fffdf9; }
+  .dot-bosque    { background: #f3f6f3; }
+  .dot-nocturno  { background: #1e2022; }
 
-  /* ── INTERFAZ 2: EDITOR DE TEXTO ── */
-  #editor-view {
-    display: none;
-  }
+  /* ── EDITOR ── */
+  #editor-view { display: none; }
 
-  /* Barra de Herramientas Estilo Premium */
   #toolbar {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -147,17 +107,11 @@
     padding: 10px 24px;
     background: var(--app-bg);
     border-bottom: 1px solid rgba(0,0,0,0.05);
-    transition: transform 0.4s ease;
+    transition: opacity 0.4s ease, background 0.4s ease;
   }
   body.theme-nocturno #toolbar { border-bottom-color: rgba(255,255,255,0.05); }
-  #toolbar.hide { transform: translateY(-100%); }
-  #toolbar:hover { transform: translateY(0) !important; }
 
-  .tb-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .tb-left { display: flex; align-items: center; gap: 10px; }
   .tb-logo-corner {
     max-height: 32px;
     width: auto;
@@ -165,11 +119,8 @@
     margin-right: 8px;
     transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
-  body.theme-nocturno .tb-logo-corner { 
-    filter: invert(1) brightness(1.2); 
-    mix-blend-mode: screen;
-  }
-  
+  body.theme-nocturno .tb-logo-corner { filter: invert(1) brightness(1.2); mix-blend-mode: screen; }
+
   .tb-btn-small {
     font-family: 'Literata', serif;
     font-size: 13px;
@@ -179,18 +130,12 @@
     color: var(--ink);
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
   }
   body.theme-nocturno .tb-btn-small { border-color: rgba(255,255,255,0.1); }
   .tb-btn-small:hover { background: var(--app-bg); border-color: var(--ink-soft); }
-  
-  /* Bloque central de metadata */
-  .tb-meta-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-  }
+
+  .tb-meta-center { display: flex; flex-direction: column; align-items: center; gap: 4px; }
   .meta-input-title {
     font-family: 'IM Fell English', serif;
     font-size: 18px;
@@ -200,58 +145,84 @@
     outline: none;
     text-align: center;
     width: 80%;
+    transition: color 0.4s;
   }
   .meta-input-author {
     font-family: 'Literata', serif;
-    font-size: 13px;
+    font-size: 14px;
     font-style: italic;
     color: var(--ink-soft);
     background: transparent;
     border: none;
     outline: none;
     text-align: center;
-    width: 60%;
+    width: 70%;
+    transition: color 0.4s;
   }
   .meta-input-title::placeholder, .meta-input-author::placeholder { color: var(--ink-ghost); }
 
   .tb-right {
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
     font-size: 13px;
     color: var(--ink-soft);
   }
 
-  /* ── LIENZO UNIFICADO DE PAPEL ── */
+  /* Indicador de guardado */
+  #save-indicator {
+    font-size: 12px;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  #save-indicator.show { opacity: 1; }
+
+  /* ── PAPEL ── */
   #main-paper {
     max-width: var(--page-width);
     margin: 90px auto 120px;
     background: var(--paper);
     padding: 80px 80px 100px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
     border-radius: 4px;
-    transition: background 0.4s ease;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
   }
 
-  #chapters {
-    display: flex;
-    flex-direction: column;
-    gap: 56px;
-  }
+  #chapters { display: flex; flex-direction: column; }
+
+  /* ── CAPÍTULO ── */
   .chapter {
     position: relative;
-    transition: opacity 0.3s ease;
+    padding: 48px 0;
+    transition: filter 0.35s ease, opacity 0.35s ease;
   }
-  .chapter-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 24px;
+
+  /* Separador ornamental entre capítulos */
+  .chapter + .chapter {
+    border-top: 1px solid rgba(0,0,0,0.07);
   }
+  body.theme-nocturno .chapter + .chapter { border-top-color: rgba(255,255,255,0.06); }
+
+  .chapter-ornament {
+    text-align: center;
+    font-size: 14px;
+    color: var(--ink-ghost);
+    letter-spacing: 0.3em;
+    margin-bottom: 36px;
+    user-select: none;
+  }
+
+  .chapter-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
   .chapter-num {
     font-family: 'IM Fell English', serif;
     font-size: 15px;
     color: var(--accent);
     font-style: italic;
     white-space: nowrap;
+    transition: color 0.4s;
   }
   .chapter-title-input {
     font-family: 'IM Fell English', serif;
@@ -261,9 +232,11 @@
     border: none;
     outline: none;
     width: 100%;
+    transition: color 0.4s;
   }
   .chapter-title-input::placeholder { color: var(--ink-ghost); font-style: italic; }
 
+  /* Cuerpo: sin sangría en primer párrafo, con sangría en los demás */
   .chapter-body {
     font-family: 'Literata', Georgia, serif;
     font-size: 18px;
@@ -277,69 +250,101 @@
     overflow: hidden;
     min-height: 180px;
     text-align: justify;
+    transition: color 0.4s;
   }
   .chapter-body::placeholder { color: var(--ink-ghost); font-style: italic; }
 
   .chapter-delete {
     position: absolute;
-    top: 0; right: -36px;
+    top: 48px;
+    right: 0;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--ink-ghost);
     font-size: 18px;
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, color 0.2s;
+    padding: 2px 6px;
   }
   .chapter:hover .chapter-delete { opacity: 1; }
   .chapter-delete:hover { color: #c0392b; }
 
+  /* ── AGREGAR CAPÍTULO ── */
   #add-chapter-wrap {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     padding-top: 48px;
+    transition: opacity 0.3s ease;
   }
   #add-chapter-btn {
-    font-size: 22px;
-    width: 44px;
-    height: 44px;
+    font-size: 20px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     background: transparent;
     border: 1px solid rgba(0,0,0,0.12);
     color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.2s;
+    line-height: 1;
   }
   body.theme-nocturno #add-chapter-btn { border-color: rgba(255,255,255,0.1); }
   #add-chapter-btn:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  #add-chapter-label {
+    font-size: 13px;
+    color: var(--ink-ghost);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  #add-chapter-label:hover { color: var(--ink-soft); }
 
-  /* ── MODO ZEN OPTIMIZADO ── */
-  body.focus-mode #main-paper { box-shadow: none; background: transparent; }
-  body.focus-mode .chapter { opacity: 0.06; pointer-events: none; }
-  body.focus-mode .chapter.active-focus { opacity: 1 !important; pointer-events: auto; }
+  /* ── MODO ZEN ── */
+  body.focus-mode #toolbar {
+    opacity: 0;
+    pointer-events: none;
+  }
+  body.focus-mode #toolbar:hover {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.focus-mode #hotkey-help { opacity: 0 !important; }
   body.focus-mode #add-chapter-wrap { opacity: 0; pointer-events: none; }
+  body.focus-mode .chapter {
+    filter: blur(2px);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  body.focus-mode .chapter.active-focus {
+    filter: none !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+  }
 
-  /* ── AYUDA MEMORIA FLOTANTE TRANSPARENTE ── */
+  /* ── HINT ATAJOS ── */
   #hotkey-help {
     position: fixed;
-    bottom: 20px;
-    left: 24px;
+    bottom: 20px; left: 24px;
     font-size: 11px;
     color: var(--ink-soft);
-    opacity: 0.25;
+    opacity: 0.3;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     pointer-events: none;
     transition: opacity 0.3s;
     z-index: 150;
   }
-  #hotkey-help.hide { opacity: 0 !important; }
 
-  /* FORMATO DE IMPRESIÓN EDITORIAL */
+  /* ── PRINT ── */
   @media print {
-    #toolbar, #add-chapter-wrap, .chapter-delete, #hotkey-help { display: none !important; }
+    #toolbar, #add-chapter-wrap, .chapter-delete, #hotkey-help, .chapter-ornament { display: none !important; }
     body { background: white !important; }
-    #main-paper { padding: 0 !important; max-width: 100% !important; margin: 0 !important; box-shadow: none !important;}
-    .chapter { page-break-before: always; margin-top: 30mm;}
+    #main-paper { padding: 0 !important; max-width: 100% !important; margin: 0 !important; box-shadow: none !important; }
+    .chapter { page-break-before: always; margin-top: 30mm; padding: 0; border: none !important; }
     p { margin-bottom: 0; text-indent: 2em; text-align: justify; }
     p:first-of-type, h2+p { text-indent: 0; }
     @page { size: A5; margin: 20mm 15mm; }
@@ -348,11 +353,10 @@
 </head>
 <body>
 
-<!-- INTERFAZ 1: INICIO / DASHBOARD -->
+<!-- DASHBOARD -->
 <div id="dashboard-view">
   <div class="db-card">
     <img src="Escribir simple. Sin distracciones. (1).png" alt="Té de Algo Logo" class="db-logo">
-    
     <div class="db-actions">
       <button class="db-btn primary" onclick="startNewManuscrito()">Nuevo Manuscrito</button>
       <button class="db-btn" id="db-continue-btn" onclick="continueManuscrito()" style="display:none;">Continuar Escribiendo</button>
@@ -361,7 +365,6 @@
         <input type="file" accept=".html" style="display:none" onchange="importHTML(event)">
       </label>
     </div>
-
     <div class="theme-section">
       <h3>Tema de Interfaz</h3>
       <div class="theme-options">
@@ -374,10 +377,8 @@
   </div>
 </div>
 
-<!-- INTERFAZ 2: EDITOR COMPLETO -->
+<!-- EDITOR -->
 <div id="editor-view">
-  
-  <!-- BARRA SUPERIOR CON METADATA INTEGRADA -->
   <div id="toolbar">
     <div class="tb-left">
       <img src="Escribir simple. Sin distracciones. (1).png" class="tb-logo-corner" alt="Logo">
@@ -385,57 +386,54 @@
       <button class="tb-btn-small" onclick="exportHTML()">Exportar</button>
       <button id="zen-indicator" class="tb-btn-small" onclick="toggleFocusMode()">Modo Zen</button>
     </div>
-
     <div class="tb-meta-center">
-      <input type="text" id="meta-title" class="meta-input-title" placeholder="Título del Libro" oninput="saveLocal()">
-      <input type="text" id="meta-author" class="meta-input-author" placeholder="Nombre del Autor" oninput="saveLocal()">
+      <input type="text" id="meta-title" class="meta-input-title" placeholder="Título del Libro" oninput="triggerSave()">
+      <input type="text" id="meta-author" class="meta-input-author" placeholder="Nombre del Autor" oninput="triggerSave()">
     </div>
-
     <div class="tb-right">
+      <span id="save-indicator">Guardado ✓</span>
       <span id="wordcount">0 palabras</span>
     </div>
   </div>
 
-  <!-- AYUDA MEMORIA DISCRETO -->
-  <div id="hotkey-help">
-    Ctrl+F: Zen | Ctrl+Enter: Nuevo Cap. | Ctrl+S: Descargar
-  </div>
+  <div id="hotkey-help">Ctrl+F: Zen &nbsp;|&nbsp; Ctrl+Enter: Nuevo Cap. &nbsp;|&nbsp; Ctrl+S: Exportar</div>
 
-  <!-- LIENZO DE ESCRITURA -->
   <div id="main-paper">
     <div id="chapters"></div>
     <div id="add-chapter-wrap">
-      <button id="add-chapter-btn" onclick="addChapter()" title="Agregar capítulo (Ctrl+Enter)">+</button>
+      <button id="add-chapter-btn" onclick="addChapter()" title="Nuevo capítulo (Ctrl+Enter)">+</button>
+      <span id="add-chapter-label" onclick="addChapter()">Nuevo capítulo</span>
     </div>
   </div>
 </div>
 
 <script>
 let chapterCount = 0;
-let hideTimeout = null;
 let currentThemeClass = 'theme-editorial';
+let saveTimeout = null;
+let saveIndicatorTimeout = null;
 
-// ── MANEJO DE VISTAS ──
+// ── VISTAS ──
 function startNewManuscrito() {
-  if (confirm('¿Empezar un nuevo manuscrito? Esto limpiará el espacio actual.')) {
-    document.getElementById('meta-title').value = '';
-    document.getElementById('meta-author').value = '';
-    document.getElementById('chapters').innerHTML = '';
-    chapterCount = 0;
-    addChapter('', '', true);
-    switchToEditor();
-    saveLocal();
-  }
+  const hasContent = localStorage.getItem('escritura_title_backup') ||
+    (localStorage.getItem('escritura_chapters_backup') || '[]') !== '[]';
+  if (hasContent && !confirm('¿Empezar un nuevo manuscrito? Esto limpiará el espacio actual.')) return;
+  document.getElementById('meta-title').value = '';
+  document.getElementById('meta-author').value = '';
+  document.getElementById('chapters').innerHTML = '';
+  chapterCount = 0;
+  addChapter('', '', true);
+  switchToEditor();
+  saveLocal();
 }
 
-function continueManuscrito() {
-  switchToEditor();
-}
+function continueManuscrito() { switchToEditor(); }
 
 function switchToEditor() {
   document.getElementById('dashboard-view').style.display = 'none';
   document.getElementById('editor-view').style.display = 'block';
   resizeAll();
+  updateWordCount();
 }
 
 function goBackToDashboard() {
@@ -444,53 +442,25 @@ function goBackToDashboard() {
   checkActiveBackup();
 }
 
-// ── MANEJO DE TEMAS ──
+// ── TEMAS ──
 function changeTheme(themeName, elDot) {
   document.body.className = '';
   currentThemeClass = 'theme-' + themeName;
   document.body.classList.add(currentThemeClass);
-  
-  document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
+  document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
   if (elDot) elDot.classList.add('active');
-  
   localStorage.setItem('escritura_theme_pref', themeName);
 }
 
-// ── COMPORTAMIENTO INTELIGENTE DISTRACTION-FREE ──
-function resetHideTimer() {
-  const toolbar = document.getElementById('toolbar');
-  const help = document.getElementById('hotkey-help');
-  
-  toolbar.classList.remove('hide');
-  help.classList.remove('hide');
-  
-  clearTimeout(hideTimeout);
-  
-  hideTimeout = setTimeout(() => {
-    if (document.activeElement && document.activeElement.classList.contains('chapter-body')) {
-      toolbar.classList.add('hide');
-      help.classList.add('hide');
-    }
-  }, 3000);
-}
-document.addEventListener('mousemove', () => {
-  document.getElementById('toolbar').classList.remove('hide');
-  document.getElementById('hotkey-help').classList.remove('hide');
-});
-document.addEventListener('input', resetHideTimer);
-
-// ── FUNCIONES DEL LIENZO Y CAPÍTULOS ──
+// ── CAPÍTULOS ──
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = el.scrollHeight + 'px';
 }
-
-function resizeAll() {
-  document.querySelectorAll('textarea').forEach(autoResize);
-}
+function resizeAll() { document.querySelectorAll('textarea').forEach(autoResize); }
 
 function updateWordCount() {
-  const texts = [...document.querySelectorAll('textarea, .meta-input-title, .meta-input-author')]
+  const texts = [...document.querySelectorAll('.chapter-body, .chapter-title-input, #meta-title, #meta-author')]
     .map(el => el.value).join(' ');
   const words = texts.trim().split(/\s+/).filter(w => w.length > 0).length;
   document.getElementById('wordcount').textContent = words.toLocaleString('es-AR') + ' palabras';
@@ -503,24 +473,27 @@ function addChapter(titleVal = '', bodyVal = '', forceFocus = true) {
   div.dataset.id = chapterCount;
 
   const num = toRoman(chapterCount);
+  const isFirst = chapterCount === 1;
 
   div.innerHTML = `
     <button class="chapter-delete" title="Eliminar capítulo" onclick="deleteChapter(this)">×</button>
+    ${!isFirst ? '<div class="chapter-ornament">· · ·</div>' : ''}
     <div class="chapter-header">
       <span class="chapter-num">Capítulo ${num}</span>
-      <input class="chapter-title-input" type="text" placeholder="Título opcional" value="${escHtml(titleVal)}" onfocus="setFocusTarget(this)" oninput="updateWordCount(); saveLocal()">
+      <input class="chapter-title-input" type="text" placeholder="Título opcional" value="${escHtml(titleVal)}"
+        onfocus="setFocusTarget(this)" oninput="triggerSave(); updateWordCount()">
     </div>
-    <textarea class="chapter-body" placeholder="Empezá a escribir acá..." onfocus="setFocusTarget(this)" oninput="autoResize(this); updateWordCount(); saveLocal()">${escHtml(bodyVal)}</textarea>
+    <textarea class="chapter-body" placeholder="Empezá a escribir acá..."
+      onfocus="setFocusTarget(this)" oninput="autoResize(this); triggerSave(); updateWordCount()">${escHtml(bodyVal)}</textarea>
   `;
 
   document.getElementById('chapters').appendChild(div);
   const ta = div.querySelector('.chapter-body');
   autoResize(ta);
-  if (forceFocus) ta.focus();
+  if (forceFocus) { setTimeout(() => ta.focus(), 50); }
   updateWordCount();
 }
 
-// Controlar el foco activo en Modo Zen
 function setFocusTarget(el) {
   if (document.body.classList.contains('focus-mode')) {
     document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
@@ -539,25 +512,21 @@ function deleteChapter(btn) {
 function renumberChapters() {
   document.querySelectorAll('.chapter').forEach((ch, i) => {
     ch.querySelector('.chapter-num').textContent = 'Capítulo ' + toRoman(i + 1);
+    // El ornamento solo aparece desde el segundo capítulo
+    const orn = ch.querySelector('.chapter-ornament');
+    if (i === 0 && orn) orn.remove();
+    if (i > 0 && !orn) {
+      const header = ch.querySelector('.chapter-header');
+      const div = document.createElement('div');
+      div.className = 'chapter-ornament';
+      div.textContent = '· · ·';
+      ch.insertBefore(div, header);
+    }
   });
   chapterCount = document.querySelectorAll('.chapter').length;
 }
 
-function toRoman(n) {
-  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
-  const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
-  let result = '';
-  for (let i = 0; i < vals.length; i++) {
-    while (n >= vals[i]) { result += syms[i]; n -= vals[i]; }
-  }
-  return result;
-}
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── MODO ZEN REFINADO ──
+// ── MODO ZEN ──
 function toggleFocusMode() {
   const isFocus = document.body.classList.toggle('focus-mode');
   document.getElementById('zen-indicator').textContent = isFocus ? 'Zen: ON' : 'Modo Zen';
@@ -574,15 +543,22 @@ function toggleFocusMode() {
   }
 }
 
-// ── KEYBINDINGS ──
-document.addEventListener('keydown', e => {
-  const modifier = navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? e.metaKey : e.ctrlKey;
-  if (modifier && e.key === 'f') { e.preventDefault(); toggleFocusMode(); }
-  else if (modifier && e.key === 'Enter') { e.preventDefault(); addChapter(); }
-  else if (modifier && e.key === 's') { e.preventDefault(); exportHTML(); }
-});
+// ── GUARDADO ──
+function triggerSave() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    saveLocal();
+    showSaveIndicator();
+  }, 800);
+}
 
-// ── PERSISTENCIA CORE ──
+function showSaveIndicator() {
+  const ind = document.getElementById('save-indicator');
+  ind.classList.add('show');
+  clearTimeout(saveIndicatorTimeout);
+  saveIndicatorTimeout = setTimeout(() => ind.classList.remove('show'), 1800);
+}
+
 function saveLocal() {
   const chapters = [];
   document.querySelectorAll('.chapter').forEach(ch => {
@@ -599,45 +575,37 @@ function saveLocal() {
 function checkActiveBackup() {
   const title = localStorage.getItem('escritura_title_backup');
   const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
-  const continueBtn = document.getElementById('db-continue-btn');
-  
-  if (title || (chaptersRaw && chaptersRaw !== '[]')) {
-    continueBtn.style.display = 'block';
-  } else {
-    continueBtn.style.display = 'none';
-  }
+  let hasChapters = false;
+  try { hasChapters = JSON.parse(chaptersRaw || '[]').some(c => c.title || c.body); } catch(e) {}
+  const show = title || hasChapters;
+  document.getElementById('db-continue-btn').style.display = show ? 'block' : 'none';
 }
 
 function loadLocal() {
   const savedTheme = localStorage.getItem('escritura_theme_pref') || 'editorial';
-  const targetDot = document.querySelector(`.dot-${savedTheme}`);
+  const targetDot = document.querySelector('.dot-' + savedTheme);
   changeTheme(savedTheme, targetDot);
 
-  const title = localStorage.getItem('escritura_title_backup');
-  const author = localStorage.getItem('escritura_author_backup');
+  const title = localStorage.getItem('escritura_title_backup') || '';
+  const author = localStorage.getItem('escritura_author_backup') || '';
   const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
 
-  if (title || author || chaptersRaw) {
-    document.getElementById('chapters').innerHTML = '';
-    chapterCount = 0;
-    document.getElementById('meta-title').value = title || '';
-    document.getElementById('meta-author').value = author || '';
+  document.getElementById('meta-title').value = title;
+  document.getElementById('meta-author').value = author;
 
-    let chapters = [];
-    try { chapters = JSON.parse(chaptersRaw) || []; } catch(e) {}
-    chapters.forEach(ch => addChapter(ch.title, ch.body, false));
-    updateWordCount();
-  }
+  let chapters = [];
+  try { chapters = JSON.parse(chaptersRaw || '[]'); } catch(e) {}
+  chapters.forEach(ch => addChapter(ch.title, ch.body, false));
+  updateWordCount();
   checkActiveBackup();
 }
 
-// ── EXPORTACIÓN E IMPORTACIÓN IMPECABLES ──
+// ── EXPORT / IMPORT ──
 function exportHTML() {
   saveLocal();
   const title = document.getElementById('meta-title').value || 'sin-titulo';
   const author = document.getElementById('meta-author').value || '';
   const chapters = [];
-  
   document.querySelectorAll('.chapter').forEach(ch => {
     chapters.push({
       title: ch.querySelector('.chapter-title-input').value,
@@ -645,7 +613,7 @@ function exportHTML() {
     });
   });
 
-  const chaptersData = JSON.stringify(chapters).replace(/</g,'\\u003c');
+  const chaptersData = JSON.stringify(chapters).replace(/</g, '\\u003c');
 
   const html = `<!DOCTYPE html>
 <html lang="es">
@@ -655,26 +623,27 @@ function exportHTML() {
 <meta name="x-escritura-export" content="true">
 <meta name="x-escritura-title" content="${escHtml(title)}">
 <meta name="x-escritura-author" content="${escHtml(author)}">
-<meta name="x-escritura-chapters" content='${chaptersData.replace(/'/g,"&apos;")}'>
+<meta name="x-escritura-chapters" content='${chaptersData.replace(/'/g, "&apos;")}'>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Literata:ital,wght@0,400;1,400&display=swap');
   body{font-family:'Literata',Georgia,serif;max-width:620px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#fbf9f5;font-size:18px;line-height:1.9}
-  h1{font-size:36px;text-align:center;margin-bottom:8px;font-family:'IM Fell English',serif;}
+  h1{font-family:'IM Fell English',serif;font-size:36px;text-align:center;margin-bottom:8px}
   .author{text-align:center;font-style:italic;color:#555;margin-bottom:60px}
-  .chapter-num{font-size:13px;color:#2e432e;letter-spacing:.06em;text-transform:uppercase;font-style:italic;margin-bottom:6px;font-family:'IM Fell English',serif;}
-  h2{font-size:24px;margin-bottom:28px;font-family:'IM Fell English',serif;}
-  p{margin-bottom:0;text-indent:2em;text-align:justify;}
-  h1 + p, h2 + p, hr + p, p:first-of-type{text-indent:0}
-  hr{border:none;border-top:1px solid #c8c2b4;margin:40px auto;width:60px}
+  .chapter-num{font-family:'IM Fell English',serif;font-size:13px;color:#2e432e;letter-spacing:.06em;text-transform:uppercase;font-style:italic;margin-bottom:6px}
+  h2{font-family:'IM Fell English',serif;font-size:24px;margin-bottom:28px}
+  p{margin-bottom:0;text-indent:2em;text-align:justify}
+  p:first-of-type,h2+p{text-indent:0}
+  .ornament{text-align:center;color:#b8b4aa;letter-spacing:.3em;margin:48px 0 36px}
 </style>
 </head>
 <body>
 <h1>${escHtml(title)}</h1>
 ${author ? `<p class="author">${escHtml(author)}</p>` : ''}
 ${chapters.map((ch, i) => `
-<hr>
+<div class="ornament">${i > 0 ? '· · ·' : ''}</div>
 <div class="chapter-num">Capítulo ${toRoman(i+1)}</div>
 ${ch.title ? `<h2>${escHtml(ch.title)}</h2>` : ''}
-${ch.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${escHtml(l)}</p>`).join('\n')}
+${ch.body.split('\n').filter(l => l.trim()).map(l => `<p>${escHtml(l)}</p>`).join('\n')}
 `).join('\n')}
 </body>
 </html>`;
@@ -689,17 +658,13 @@ function importHTML(event) {
   reader.onload = e => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(e.target.result, 'text/html');
-    const isExport = doc.querySelector('meta[name="x-escritura-export"]');
-    
-    if (!isExport) {
-      alert('Este archivo no corresponde a un export oficial de la aplicación.');
+    if (!doc.querySelector('meta[name="x-escritura-export"]')) {
+      alert('Este archivo no corresponde a un export de Té de Algo.');
       return;
     }
-
     const title = doc.querySelector('meta[name="x-escritura-title"]')?.content || '';
     const author = doc.querySelector('meta[name="x-escritura-author"]')?.content || '';
     const chaptersRaw = doc.querySelector('meta[name="x-escritura-chapters"]')?.content || '[]';
-
     let chapters = [];
     try { chapters = JSON.parse(chaptersRaw); } catch(err) {}
 
@@ -707,7 +672,6 @@ function importHTML(event) {
     document.getElementById('meta-author').value = author;
     document.getElementById('chapters').innerHTML = '';
     chapterCount = 0;
-    
     chapters.forEach(ch => addChapter(ch.title, ch.body, false));
     updateWordCount();
     saveLocal();
@@ -715,6 +679,19 @@ function importHTML(event) {
   };
   reader.readAsText(file);
   event.target.value = '';
+}
+
+// ── UTILS ──
+function toRoman(n) {
+  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+  let r = '';
+  for (let i = 0; i < vals.length; i++) while (n >= vals[i]) { r += syms[i]; n -= vals[i]; }
+  return r;
+}
+
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function download(content, filename, mime) {
@@ -726,8 +703,16 @@ function download(content, filename, mime) {
 }
 
 function slugify(str) {
-  return str.toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'') || 'manuscrito';
+  return (str || '').toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'') || 'manuscrito';
 }
+
+// ── ATAJOS ──
+document.addEventListener('keydown', e => {
+  const mod = navigator.platform.toUpperCase().includes('MAC') ? e.metaKey : e.ctrlKey;
+  if (mod && e.key === 'f') { e.preventDefault(); toggleFocusMode(); }
+  else if (mod && e.key === 'Enter') { e.preventDefault(); addChapter(); }
+  else if (mod && e.key === 's') { e.preventDefault(); exportHTML(); }
+});
 
 window.onload = loadLocal;
 document.addEventListener('input', updateWordCount);
