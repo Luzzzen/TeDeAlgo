@@ -3,26 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Té de Algo — Escritura Simple</title>
+<title>Té de Algo - Escritura Simple</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Literata:ital,wght@0,400;0,500;1,400&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── SISTEMA DE TEMAS DINÁMICOS ── */
+  /* ── PALETAS DE COLORES (TEMAS MAX 4) ── */
   :root {
-    --app-bg: #e8e4dc;
-    --paper: #f7f4ee;
+    --app-bg: #e3ded5;
+    --paper: #fbf9f5;
     --ink: #1a1a1a;
-    --ink-soft: #555;
-    --ink-ghost: #bbb;
-    --accent: #8b6f47;
-    --shadow: rgba(0,0,0,0.06);
-    --page-width: 680px;
+    --ink-soft: #5a5750;
+    --ink-ghost: #b8b4aa;
+    --accent: #2e432e; /* Verde original del logo */
+    --page-width: 700px;
   }
 
   body.theme-editorial {
-    --app-bg: #e8e4dc; --paper: #f7f4ee; --ink: #1a1a1a; --ink-soft: #555; --ink-ghost: #bbb; --accent: #8b6f47;
+    --app-bg: #e3ded5; --paper: #fbf9f5; --ink: #1a1a1a; --ink-soft: #5a5750; --ink-ghost: #b8b4aa; --accent: #2e432e;
   }
   body.theme-crema {
     --app-bg: #ebdec9; --paper: #fffdf9; --ink: #221f1a; --ink-soft: #665f53; --ink-ghost: #c2b7a3; --accent: #8c6239;
@@ -37,12 +36,12 @@
   html, body {
     background: var(--app-bg);
     min-height: 100vh;
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Literata', Georgia, serif;
     color: var(--ink);
     transition: background 0.4s ease, color 0.4s ease;
   }
 
-  /* ── INTERFAZ 1: MENÚ DE INICIO (DASHBOARD) ── */
+  /* ── INTERFAZ 1: PÁGINA DE INICIO (DASHBOARD) ── */
   #dashboard-view {
     display: flex;
     min-height: 100vh;
@@ -56,17 +55,19 @@
     width: 100%;
   }
   
-  /* Logotipo optimizado en tamaño */
+  /* LOGO OPTIMIZADO (Más grande y dinámico) */
   .db-logo {
-    max-width: 270px;
+    max-width: 260px; /* Tamaño generoso solicitado */
     width: 100%;
     height: auto;
+    mix-blend-mode: multiply;
     margin-bottom: 40px;
-    transition: filter 0.3s ease;
+    transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
-  /* Inversión tonal inteligente para el modo oscuro */
+  /* Inversión perfecta para el modo oscuro */
   body.theme-nocturno .db-logo {
-    filter: invert(1) brightness(1.15);
+    filter: invert(1) brightness(1.2);
+    mix-blend-mode: screen;
   }
 
   .db-actions {
@@ -76,22 +77,22 @@
     margin-bottom: 48px;
   }
   .db-btn {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Literata', serif;
     font-size: 16px;
-    padding: 13px;
-    border: 1px solid var(--ink-ghost);
-    border-radius: 4px;
+    padding: 14px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 6px;
     background: var(--paper);
     color: var(--ink);
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
   }
+  body.theme-nocturno .db-btn { border-color: rgba(255,255,255,0.08); }
   .db-btn:hover {
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     border-color: var(--ink-soft);
-    background: var(--paper);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   }
   .db-btn.primary {
     background: var(--accent);
@@ -102,7 +103,7 @@
 
   /* Selector de Temas */
   .theme-section h3 {
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--ink-soft);
@@ -121,191 +122,152 @@
     cursor: pointer;
     border: 2px solid transparent;
     transition: transform 0.2s;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
   }
   .theme-dot:hover { transform: scale(1.15); }
   .theme-dot.active { border-color: var(--accent); transform: scale(1.1); }
-  .dot-editorial { background: #f7f4ee; }
+  .dot-editorial { background: #fbf9f5; }
   .dot-crema { background: #fffdf9; }
   .dot-bosque { background: #f3f6f3; }
   .dot-nocturno { background: #1e2022; }
 
-  /* ── INTERFAZ 2: ENTORNO DEL EDITOR ── */
+  /* ── INTERFAZ 2: EDITOR DE TEXTO ── */
   #editor-view {
     display: none;
   }
 
-  /* Barra Superior */
+  /* Barra de Herramientas Estilo Premium */
   #toolbar {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
-    justify-content: space-between;
     padding: 10px 24px;
     background: var(--app-bg);
-    border-bottom: 1px solid var(--ink-ghost);
-    gap: 12px;
-    opacity: 1;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.4s ease;
   }
-  #toolbar-left, #toolbar-right {
+  body.theme-nocturno #toolbar { border-bottom-color: rgba(255,255,255,0.05); }
+  #toolbar.hide { transform: translateY(-100%); }
+  #toolbar:hover { transform: translateY(0) !important; }
+
+  .tb-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
-  .tb-logo-mini {
-    max-height: 28px;
+  .tb-logo-corner {
+    max-height: 32px;
     width: auto;
-    margin-right: 6px;
-    transition: filter 0.3s ease;
+    mix-blend-mode: multiply;
+    margin-right: 8px;
+    transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
-  body.theme-nocturno .tb-logo-mini {
-    filter: invert(1) brightness(1.15);
+  body.theme-nocturno .tb-logo-corner { 
+    filter: invert(1) brightness(1.2); 
+    mix-blend-mode: screen;
   }
-
-  .btn {
-    font-family: 'EB Garamond', serif;
-    font-size: 14px;
-    color: var(--ink-soft);
+  
+  .tb-btn-small {
+    font-family: 'Literata', serif;
+    font-size: 13px;
+    padding: 5px 12px;
+    border: 1px solid rgba(0,0,0,0.1);
     background: var(--paper);
-    border: 1px solid var(--ink-ghost);
-    border-radius: 3px;
-    padding: 5px 13px;
+    color: var(--ink);
+    border-radius: 4px;
     cursor: pointer;
-    transition: all .15s;
-    white-space: nowrap;
+    transition: all 0.15s;
   }
-  .btn:hover { background: var(--app-bg); color: var(--ink); border-color: var(--ink-soft); }
-  .btn.primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--paper);
+  body.theme-nocturno .tb-btn-small { border-color: rgba(255,255,255,0.1); }
+  .tb-btn-small:hover { background: var(--app-bg); border-color: var(--ink-soft); }
+  
+  /* Bloque central de metadata */
+  .tb-meta-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
   }
-  .btn.primary:hover { opacity: 0.9; }
-
-  #book-title-bar {
+  .meta-input-title {
     font-family: 'IM Fell English', serif;
-    font-size: 16px;
+    font-size: 18px;
     color: var(--ink);
     background: transparent;
     border: none;
     outline: none;
     text-align: center;
-    min-width: 200px;
-    max-width: 340px;
-    flex: 1;
+    width: 80%;
   }
-  #book-title-bar::placeholder { color: var(--ink-ghost); font-style: italic; }
+  .meta-input-author {
+    font-family: 'Literata', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-soft);
+    background: transparent;
+    border: none;
+    outline: none;
+    text-align: center;
+    width: 60%;
+  }
+  .meta-input-title::placeholder, .meta-input-author::placeholder { color: var(--ink-ghost); }
 
-  #wordcount {
+  .tb-right {
+    text-align: right;
     font-size: 13px;
     color: var(--ink-soft);
-    font-variant-numeric: tabular-nums;
-    min-width: 80px;
-    text-align: right;
   }
 
-  /* Lienzo */
-  #main {
+  /* ── LIENZO UNIFICADO DE PAPEL ── */
+  #main-paper {
     max-width: var(--page-width);
-    margin: 0 auto;
-    padding: 90px 0 120px;
-  }
-
-  /* Portada interna */
-  #cover {
+    margin: 90px auto 120px;
     background: var(--paper);
-    box-shadow: 0 2px 18px var(--shadow);
-    padding: 80px 64px 64px;
-    margin-bottom: 2px;
-    text-align: center;
-    border-bottom: 1px solid var(--ink-ghost);
-  }
-  #cover-title {
-    font-family: 'IM Fell English', serif;
-    font-size: 42px;
-    line-height: 1.2;
-    color: var(--ink);
-    background: transparent;
-    border: none;
-    outline: none;
-    text-align: center;
-    width: 100%;
-    resize: none;
-    overflow: hidden;
-    min-height: 60px;
-  }
-  #cover-title::placeholder { color: var(--ink-ghost); font-style: italic; }
-
-  #cover-author {
-    font-family: 'EB Garamond', serif;
-    font-size: 20px;
-    color: var(--ink-soft);
-    background: transparent;
-    border: none;
-    outline: none;
-    text-align: center;
-    width: 100%;
-    margin-top: 28px;
-    font-style: italic;
-  }
-  #cover-author::placeholder { color: var(--ink-ghost); }
-
-  .cover-divider {
-    width: 60px;
-    height: 1px;
-    background: var(--accent);
-    margin: 28px auto;
-    opacity: .6;
+    padding: 80px 80px 100px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+    border-radius: 4px;
+    transition: background 0.4s ease;
   }
 
-  /* Capítulos */
+  #chapters {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
   .chapter {
-    background: var(--paper);
-    box-shadow: 0 2px 18px var(--shadow);
-    padding: 64px 64px 56px;
-    margin-bottom: 2px;
     position: relative;
+    transition: opacity 0.3s ease;
   }
   .chapter-header {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 36px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
   }
   .chapter-num {
     font-family: 'IM Fell English', serif;
-    font-size: 13px;
+    font-size: 15px;
     color: var(--accent);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    padding-top: 6px;
-    white-space: nowrap;
-    min-width: 80px;
     font-style: italic;
+    white-space: nowrap;
   }
   .chapter-title-input {
     font-family: 'IM Fell English', serif;
-    font-size: 26px;
+    font-size: 24px;
     color: var(--ink);
     background: transparent;
     border: none;
     outline: none;
     width: 100%;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 4px;
-    transition: border-color .2s;
-    line-height: 1.3;
   }
-  .chapter-title-input:focus { border-bottom-color: var(--ink-ghost); }
   .chapter-title-input::placeholder { color: var(--ink-ghost); font-style: italic; }
 
   .chapter-body {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Literata', Georgia, serif;
     font-size: 18px;
-    line-height: 1.85;
+    line-height: 1.9;
     color: var(--ink);
     background: transparent;
     border: none;
@@ -313,116 +275,80 @@
     width: 100%;
     resize: none;
     overflow: hidden;
-    min-height: 260px;
+    min-height: 180px;
+    text-align: justify;
   }
   .chapter-body::placeholder { color: var(--ink-ghost); font-style: italic; }
 
   .chapter-delete {
     position: absolute;
-    top: 18px;
-    right: 20px;
+    top: 0; right: -36px;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--ink-ghost);
     font-size: 18px;
     opacity: 0;
-    transition: all .15s;
+    transition: opacity 0.2s;
   }
   .chapter:hover .chapter-delete { opacity: 1; }
   .chapter-delete:hover { color: #c0392b; }
 
   #add-chapter-wrap {
     text-align: center;
-    padding: 32px 0 0;
+    padding-top: 48px;
   }
-  #add-chapter {
-    font-family: 'EB Garamond', serif;
-    font-size: 28px;
+  #add-chapter-btn {
+    font-size: 22px;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--paper);
-    border: 1px solid var(--ink-ghost);
-    color: var(--accent);
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.12);
+    color: var(--ink-soft);
     cursor: pointer;
-    box-shadow: 0 1px 6px var(--shadow);
-    transition: all .2s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.2s;
   }
-  #add-chapter:hover {
-    background: var(--accent);
-    color: var(--paper);
-    border-color: var(--accent);
-    transform: scale(1.1);
-  }
+  body.theme-nocturno #add-chapter-btn { border-color: rgba(255,255,255,0.1); }
+  #add-chapter-btn:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 
-  /* Atajos informativos */
+  /* ── MODO ZEN OPTIMIZADO ── */
+  body.focus-mode #main-paper { box-shadow: none; background: transparent; }
+  body.focus-mode .chapter { opacity: 0.06; pointer-events: none; }
+  body.focus-mode .chapter.active-focus { opacity: 1 !important; pointer-events: auto; }
+  body.focus-mode #add-chapter-wrap { opacity: 0; pointer-events: none; }
+
+  /* ── AYUDA MEMORIA FLOTANTE TRANSPARENTE ── */
   #hotkey-help {
     position: fixed;
-    bottom: 16px;
-    left: 20px;
+    bottom: 20px;
+    left: 24px;
     font-size: 11px;
     color: var(--ink-soft);
-    opacity: 0.4;
+    opacity: 0.25;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
     pointer-events: none;
-    z-index: 100;
+    transition: opacity 0.3s;
+    z-index: 150;
   }
+  #hotkey-help.hide { opacity: 0 !important; }
 
-  /* ── MODO ZEN SUBLIME (REPARADO) ── */
-  #toolbar, #cover, .chapter, #add-chapter-wrap, #hotkey-help {
-    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  body.zen-mode #toolbar {
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
-  }
-  body.zen-mode #toolbar:hover {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-  body.zen-mode #add-chapter-wrap {
-    opacity: 0;
-    pointer-events: none;
-  }
-  body.zen-mode #hotkey-help {
-    opacity: 0;
-  }
-  
-  /* Atenúa todo por defecto en modo zen */
-  body.zen-mode #cover,
-  body.zen-mode .chapter {
-    opacity: 0.12;
-    box-shadow: none;
-  }
-  /* Mantiene el bloque actualmente activo al 100% de nitidez y legibilidad */
-  body.zen-mode #cover:focus-within,
-  body.zen-mode .chapter:focus-within,
-  body.zen-mode .chapter.active-zen {
-    opacity: 1 !important;
-  }
-
-  /* Impresión */
+  /* FORMATO DE IMPRESIÓN EDITORIAL */
   @media print {
     #toolbar, #add-chapter-wrap, .chapter-delete, #hotkey-help { display: none !important; }
-    body { background: white; }
-    #main { padding: 0; max-width: 100%; }
-    .chapter, #cover { box-shadow: none; opacity: 1 !important; }
+    body { background: white !important; }
+    #main-paper { padding: 0 !important; max-width: 100% !important; margin: 0 !important; box-shadow: none !important;}
+    .chapter { page-break-before: always; margin-top: 30mm;}
+    p { margin-bottom: 0; text-indent: 2em; text-align: justify; }
+    p:first-of-type, h2+p { text-indent: 0; }
+    @page { size: A5; margin: 20mm 15mm; }
   }
-
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--ink-ghost); border-radius: 3px; }
 </style>
 </head>
 <body>
 
+<!-- INTERFAZ 1: INICIO / DASHBOARD -->
 <div id="dashboard-view">
   <div class="db-card">
     <img src="Escribir simple. Sin distracciones. (1).png" alt="Té de Algo Logo" class="db-logo">
@@ -448,55 +374,55 @@
   </div>
 </div>
 
+<!-- INTERFAZ 2: EDITOR COMPLETO -->
 <div id="editor-view">
+  
+  <!-- BARRA SUPERIOR CON METADATA INTEGRADA -->
   <div id="toolbar">
-    <div id="toolbar-left">
-      <img src="Escribir simple. Sin distracciones. (1).png" alt="Logo" class="tb-logo-mini">
-      <button class="btn" onclick="goBackToDashboard()">← Inicio</button>
-      <button class="btn primary" onclick="exportHTML()">↓ Exportar</button>
-      <button class="btn" id="zen-btn" onclick="toggleZenMode()">Modo Zen</button>
-      <label class="btn" style="cursor:pointer">
-        ↑ Importar
-        <input type="file" accept=".html" style="display:none" onchange="importHTML(event)">
-      </label>
+    <div class="tb-left">
+      <img src="Escribir simple. Sin distracciones. (1).png" class="tb-logo-corner" alt="Logo">
+      <button class="tb-btn-small" onclick="goBackToDashboard()">← Inicio</button>
+      <button class="tb-btn-small" onclick="exportHTML()">Exportar</button>
+      <button id="zen-indicator" class="tb-btn-small" onclick="toggleFocusMode()">Modo Zen</button>
     </div>
 
-    <input id="book-title-bar" type="text" placeholder="Título del libro…" oninput="syncTitle(this.value); saveLocal()" />
+    <div class="tb-meta-center">
+      <input type="text" id="meta-title" class="meta-input-title" placeholder="Título del Libro" oninput="saveLocal()">
+      <input type="text" id="meta-author" class="meta-input-author" placeholder="Nombre del Autor" oninput="saveLocal()">
+    </div>
 
-    <div id="toolbar-right">
+    <div class="tb-right">
       <span id="wordcount">0 palabras</span>
     </div>
   </div>
 
-  <div id="hotkey-help">Alt+Z: Zen | Ctrl+Enter: Nuevo Cap.</div>
+  <!-- AYUDA MEMORIA DISCRETO -->
+  <div id="hotkey-help">
+    Ctrl+F: Zen | Ctrl+Enter: Nuevo Cap. | Ctrl+S: Descargar
+  </div>
 
-  <div id="main">
-    <div id="cover">
-      <textarea id="cover-title" rows="1" placeholder="Título Principal" oninput="autoResize(this); syncTitleBar(this.value); updateWordCount(); saveLocal()"></textarea>
-      <div class="cover-divider"></div>
-      <input id="cover-author" type="text" placeholder="Nombre del autor" oninput="updateWordCount(); saveLocal()">
-    </div>
-
+  <!-- LIENZO DE ESCRITURA -->
+  <div id="main-paper">
     <div id="chapters"></div>
-
     <div id="add-chapter-wrap">
-      <button id="add-chapter" onclick="addChapter()" title="Agregar capítulo (Ctrl+Enter)">+</button>
+      <button id="add-chapter-btn" onclick="addChapter()" title="Agregar capítulo (Ctrl+Enter)">+</button>
     </div>
   </div>
 </div>
 
 <script>
 let chapterCount = 0;
+let hideTimeout = null;
+let currentThemeClass = 'theme-editorial';
 
-// ── MANEJO DE VISTAS Y NAVEGACIÓN ──
+// ── MANEJO DE VISTAS ──
 function startNewManuscrito() {
-  if (confirm('¿Empezar un nuevo manuscrito? Esto restablecerá el lienzo actual.')) {
-    document.getElementById('cover-title').value = '';
-    document.getElementById('cover-author').value = '';
-    document.getElementById('book-title-bar').value = '';
+  if (confirm('¿Empezar un nuevo manuscrito? Esto limpiará el espacio actual.')) {
+    document.getElementById('meta-title').value = '';
+    document.getElementById('meta-author').value = '';
     document.getElementById('chapters').innerHTML = '';
     chapterCount = 0;
-    addChapter('', '');
+    addChapter('', '', true);
     switchToEditor();
     saveLocal();
   }
@@ -521,19 +447,39 @@ function goBackToDashboard() {
 // ── MANEJO DE TEMAS ──
 function changeTheme(themeName, elDot) {
   document.body.className = '';
-  document.body.classList.add('theme-' + themeName);
+  currentThemeClass = 'theme-' + themeName;
+  document.body.classList.add(currentThemeClass);
   
   document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
-  if (elDot) {
-    elDot.classList.add('active');
-  } else {
-    const targetDot = document.querySelector(`.dot-${themeName}`);
-    if (targetDot) targetDot.classList.add('active');
-  }
-  localStorage.setItem('tda_theme_preference', themeName);
+  if (elDot) elDot.classList.add('active');
+  
+  localStorage.setItem('escritura_theme_pref', themeName);
 }
 
-// ── AUTO RESIZE TEXTAREA ──
+// ── COMPORTAMIENTO INTELIGENTE DISTRACTION-FREE ──
+function resetHideTimer() {
+  const toolbar = document.getElementById('toolbar');
+  const help = document.getElementById('hotkey-help');
+  
+  toolbar.classList.remove('hide');
+  help.classList.remove('hide');
+  
+  clearTimeout(hideTimeout);
+  
+  hideTimeout = setTimeout(() => {
+    if (document.activeElement && document.activeElement.classList.contains('chapter-body')) {
+      toolbar.classList.add('hide');
+      help.classList.add('hide');
+    }
+  }, 3000);
+}
+document.addEventListener('mousemove', () => {
+  document.getElementById('toolbar').classList.remove('hide');
+  document.getElementById('hotkey-help').classList.remove('hide');
+});
+document.addEventListener('input', resetHideTimer);
+
+// ── FUNCIONES DEL LIENZO Y CAPÍTULOS ──
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = el.scrollHeight + 'px';
@@ -543,25 +489,14 @@ function resizeAll() {
   document.querySelectorAll('textarea').forEach(autoResize);
 }
 
-// ── SINCRONIZACIÓN DE TÍTULOS ──
-function syncTitle(val) {
-  document.getElementById('cover-title').value = val;
-  autoResize(document.getElementById('cover-title'));
-}
-function syncTitleBar(val) {
-  document.getElementById('book-title-bar').value = val;
-}
-
-// ── CONTADOR DE PALABRAS ──
 function updateWordCount() {
-  const texts = [...document.querySelectorAll('textarea, input[type=text]')]
+  const texts = [...document.querySelectorAll('textarea, .meta-input-title, .meta-input-author')]
     .map(el => el.value).join(' ');
   const words = texts.trim().split(/\s+/).filter(w => w.length > 0).length;
   document.getElementById('wordcount').textContent = words.toLocaleString('es-AR') + ' palabras';
 }
 
-// ── MANEJO DE CAPÍTULOS ──
-function addChapter(titleVal = '', bodyVal = '') {
+function addChapter(titleVal = '', bodyVal = '', forceFocus = true) {
   chapterCount++;
   const div = document.createElement('div');
   div.className = 'chapter';
@@ -572,21 +507,24 @@ function addChapter(titleVal = '', bodyVal = '') {
   div.innerHTML = `
     <button class="chapter-delete" title="Eliminar capítulo" onclick="deleteChapter(this)">×</button>
     <div class="chapter-header">
-      <span class="chapter-num">Cap. ${num}</span>
-      <input class="chapter-title-input" type="text" placeholder="Título del capítulo (opcional)" value="${escHtml(titleVal)}" oninput="updateWordCount(); saveLocal()">
+      <span class="chapter-num">Capítulo ${num}</span>
+      <input class="chapter-title-input" type="text" placeholder="Título opcional" value="${escHtml(titleVal)}" onfocus="setFocusTarget(this)" oninput="updateWordCount(); saveLocal()">
     </div>
-    <textarea class="chapter-body" placeholder="Empezá a escribir acá…" oninput="autoResize(this); updateWordCount(); saveLocal()">${escHtml(bodyVal)}</textarea>
+    <textarea class="chapter-body" placeholder="Empezá a escribir acá..." onfocus="setFocusTarget(this)" oninput="autoResize(this); updateWordCount(); saveLocal()">${escHtml(bodyVal)}</textarea>
   `;
 
   document.getElementById('chapters').appendChild(div);
-
   const ta = div.querySelector('.chapter-body');
   autoResize(ta);
-  ta.focus();
+  if (forceFocus) ta.focus();
   updateWordCount();
-  
-  if (document.body.classList.contains('zen-mode')) {
-    markActiveZen(div);
+}
+
+// Controlar el foco activo en Modo Zen
+function setFocusTarget(el) {
+  if (document.body.classList.contains('focus-mode')) {
+    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
+    el.closest('.chapter').classList.add('active-focus');
   }
 }
 
@@ -600,7 +538,7 @@ function deleteChapter(btn) {
 
 function renumberChapters() {
   document.querySelectorAll('.chapter').forEach((ch, i) => {
-    ch.querySelector('.chapter-num').textContent = 'Cap. ' + toRoman(i + 1);
+    ch.querySelector('.chapter-num').textContent = 'Capítulo ' + toRoman(i + 1);
   });
   chapterCount = document.querySelectorAll('.chapter').length;
 }
@@ -619,55 +557,32 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── CONTROL MODO ZEN SEGURO ──
-function toggleZenMode() {
-  const isZen = document.body.classList.toggle('zen-mode');
-  document.getElementById('zen-btn').textContent = isZen ? 'Zen: ON' : 'Modo Zen';
-  
-  if (isZen) {
+// ── MODO ZEN REFINADO ──
+function toggleFocusMode() {
+  const isFocus = document.body.classList.toggle('focus-mode');
+  document.getElementById('zen-indicator').textContent = isFocus ? 'Zen: ON' : 'Modo Zen';
+  if (isFocus) {
     const activeEl = document.activeElement;
-    if (activeEl && (activeEl.classList.contains('chapter-body') || activeEl.classList.contains('chapter-title-input'))) {
-      markActiveZen(activeEl.closest('.chapter'));
+    if (activeEl && activeEl.closest('.chapter')) {
+      activeEl.closest('.chapter').classList.add('active-focus');
     } else {
-      const firstCh = document.querySelector('.chapter');
-      if (firstCh) {
-        markActiveZen(firstCh);
-        firstCh.querySelector('.chapter-body').focus();
-      }
+      const first = document.querySelector('.chapter');
+      if (first) { first.classList.add('active-focus'); first.querySelector('.chapter-body').focus(); }
     }
   } else {
-    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-zen'));
+    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
   }
 }
 
-function markActiveZen(targetCh) {
-  document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-zen'));
-  if (targetCh) targetCh.classList.add('active-zen');
-}
-
-// Escucha focos globales para sincronizar opacidad en modo Zen de forma fluida
-document.addEventListener('focusin', (e) => {
-  if (!document.body.classList.contains('zen-mode')) return;
-  const ch = e.target.closest('.chapter');
-  markActiveZen(ch);
-});
-
-// Atajos de teclado (Alt+Z / Ctrl+Enter)
+// ── KEYBINDINGS ──
 document.addEventListener('keydown', e => {
-  if (e.altKey && e.key.toLowerCase() === 'z') {
-    e.preventDefault();
-    toggleZenMode();
-  }
   const modifier = navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? e.metaKey : e.ctrlKey;
-  if (modifier && e.key === 'Enter') {
-    e.preventDefault();
-    if (document.getElementById('editor-view').style.display === 'block') {
-      addChapter();
-    }
-  }
+  if (modifier && e.key === 'f') { e.preventDefault(); toggleFocusMode(); }
+  else if (modifier && e.key === 'Enter') { e.preventDefault(); addChapter(); }
+  else if (modifier && e.key === 's') { e.preventDefault(); exportHTML(); }
 });
 
-// ── AUTO-GUARDADO LOCAL STORAGE ──
+// ── PERSISTENCIA CORE ──
 function saveLocal() {
   const chapters = [];
   document.querySelectorAll('.chapter').forEach(ch => {
@@ -676,14 +591,14 @@ function saveLocal() {
       body: ch.querySelector('.chapter-body').value
     });
   });
-  localStorage.setItem('tda_chapters_data', JSON.stringify(chapters));
-  localStorage.setItem('tda_title_data', document.getElementById('cover-title').value);
-  localStorage.setItem('tda_author_data', document.getElementById('cover-author').value);
+  localStorage.setItem('escritura_chapters_backup', JSON.stringify(chapters));
+  localStorage.setItem('escritura_title_backup', document.getElementById('meta-title').value);
+  localStorage.setItem('escritura_author_backup', document.getElementById('meta-author').value);
 }
 
 function checkActiveBackup() {
-  const title = localStorage.getItem('tda_title_data');
-  const chaptersRaw = localStorage.getItem('tda_chapters_data');
+  const title = localStorage.getItem('escritura_title_backup');
+  const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
   const continueBtn = document.getElementById('db-continue-btn');
   
   if (title || (chaptersRaw && chaptersRaw !== '[]')) {
@@ -694,46 +609,35 @@ function checkActiveBackup() {
 }
 
 function loadLocal() {
-  // Cargar tema preferido
-  const savedTheme = localStorage.getItem('tda_theme_preference') || 'editorial';
-  changeTheme(savedTheme, null);
+  const savedTheme = localStorage.getItem('escritura_theme_pref') || 'editorial';
+  const targetDot = document.querySelector(`.dot-${savedTheme}`);
+  changeTheme(savedTheme, targetDot);
 
-  const title = localStorage.getItem('tda_title_data');
-  const author = localStorage.getItem('tda_author_data');
-  const chaptersRaw = localStorage.getItem('tda_chapters_data');
+  const title = localStorage.getItem('escritura_title_backup');
+  const author = localStorage.getItem('escritura_author_backup');
+  const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
 
   if (title || author || chaptersRaw) {
     document.getElementById('chapters').innerHTML = '';
     chapterCount = 0;
-    
-    document.getElementById('cover-title').value = title || '';
-    document.getElementById('book-title-bar').value = title || '';
-    document.getElementById('cover-author').value = author || '';
+    document.getElementById('meta-title').value = title || '';
+    document.getElementById('meta-author').value = author || '';
 
     let chapters = [];
     try { chapters = JSON.parse(chaptersRaw) || []; } catch(e) {}
-    
-    if (chapters.length > 0) {
-      chapters.forEach(ch => addChapter(ch.title, ch.body));
-    } else {
-      addChapter(); // Fallback por si está vacío
-    }
+    chapters.forEach(ch => addChapter(ch.title, ch.body, false));
     updateWordCount();
-    resizeAll();
-  } else {
-    // Primer inicio absoluto sin backups
-    addChapter();
   }
   checkActiveBackup();
 }
 
-// ── EXPORTACIÓN E IMPORTACIÓN ──
+// ── EXPORTACIÓN E IMPORTACIÓN IMPECABLES ──
 function exportHTML() {
   saveLocal();
-  const title = document.getElementById('cover-title').value || 'sin-titulo';
-  const author = document.getElementById('cover-author').value || '';
-
+  const title = document.getElementById('meta-title').value || 'sin-titulo';
+  const author = document.getElementById('meta-author').value || '';
   const chapters = [];
+  
   document.querySelectorAll('.chapter').forEach(ch => {
     chapters.push({
       title: ch.querySelector('.chapter-title-input').value,
@@ -753,13 +657,13 @@ function exportHTML() {
 <meta name="x-escritura-author" content="${escHtml(author)}">
 <meta name="x-escritura-chapters" content='${chaptersData.replace(/'/g,"&apos;")}'>
 <style>
-  body{font-family:'EB Garamond',Georgia,serif;max-width:640px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#f7f4ee;font-size:18px;line-height:1.85}
+  body{font-family:'Literata',Georgia,serif;max-width:620px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#fbf9f5;font-size:18px;line-height:1.9}
   h1{font-size:36px;text-align:center;margin-bottom:8px;font-family:'IM Fell English',serif;}
   .author{text-align:center;font-style:italic;color:#555;margin-bottom:60px}
-  .chapter-num{font-size:13px;color:#8b6f47;letter-spacing:.08em;text-transform:uppercase;font-style:italic;margin-bottom:6px;font-family:'IM Fell English',serif;}
-  h2{font-size:26px;margin-bottom:32px;font-family:'IM Fell English',serif;}
+  .chapter-num{font-size:13px;color:#2e432e;letter-spacing:.06em;text-transform:uppercase;font-style:italic;margin-bottom:6px;font-family:'IM Fell English',serif;}
+  h2{font-size:24px;margin-bottom:28px;font-family:'IM Fell English',serif;}
   p{margin-bottom:0;text-indent:2em;text-align:justify;}
-  p:first-of-type{text-indent:0}
+  h1 + p, h2 + p, hr + p, p:first-of-type{text-indent:0}
   hr{border:none;border-top:1px solid #c8c2b4;margin:40px auto;width:60px}
 </style>
 </head>
@@ -768,7 +672,7 @@ function exportHTML() {
 ${author ? `<p class="author">${escHtml(author)}</p>` : ''}
 ${chapters.map((ch, i) => `
 <hr>
-<div class="chapter-num">Cap. ${toRoman(i+1)}</div>
+<div class="chapter-num">Capítulo ${toRoman(i+1)}</div>
 ${ch.title ? `<h2>${escHtml(ch.title)}</h2>` : ''}
 ${ch.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${escHtml(l)}</p>`).join('\n')}
 `).join('\n')}
@@ -788,7 +692,7 @@ function importHTML(event) {
     const isExport = doc.querySelector('meta[name="x-escritura-export"]');
     
     if (!isExport) {
-      alert('Este archivo no corresponde a una exportación oficial compatible.');
+      alert('Este archivo no corresponde a un export oficial de la aplicación.');
       return;
     }
 
@@ -799,14 +703,12 @@ function importHTML(event) {
     let chapters = [];
     try { chapters = JSON.parse(chaptersRaw); } catch(err) {}
 
-    document.getElementById('cover-title').value = title;
-    document.getElementById('book-title-bar').value = title;
-    document.getElementById('cover-author').value = author;
-    
+    document.getElementById('meta-title').value = title;
+    document.getElementById('meta-author').value = author;
     document.getElementById('chapters').innerHTML = '';
     chapterCount = 0;
     
-    chapters.forEach(ch => addChapter(ch.title, ch.body));
+    chapters.forEach(ch => addChapter(ch.title, ch.body, false));
     updateWordCount();
     saveLocal();
     switchToEditor();
@@ -828,6 +730,7 @@ function slugify(str) {
 }
 
 window.onload = loadLocal;
+document.addEventListener('input', updateWordCount);
 </script>
 </body>
 </html>
