@@ -54,16 +54,22 @@
     max-width: 440px;
     width: 100%;
   }
+  
+  /* LOGO OPTIMIZADO (Más grande y dinámico) */
   .db-logo {
-    max-width: 180px;
+    max-width: 260px; /* Tamaño generoso solicitado */
+    width: 100%;
     height: auto;
     mix-blend-mode: multiply;
-    margin-bottom: 48px;
-    transition: filter 0.3s;
+    margin-bottom: 40px;
+    transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
+  /* Inversión perfecta para el modo oscuro */
   body.theme-nocturno .db-logo {
-    filter: invert(0.9) hue-rotate(180deg);
+    filter: invert(1) brightness(1.2);
+    mix-blend-mode: screen;
   }
+
   .db-actions {
     display: flex;
     flex-direction: column;
@@ -127,7 +133,7 @@
 
   /* ── INTERFAZ 2: EDITOR DE TEXTO ── */
   #editor-view {
-    display: none; /* Se activa mediante JS */
+    display: none;
   }
 
   /* Barra de Herramientas Estilo Premium */
@@ -153,12 +159,16 @@
     gap: 10px;
   }
   .tb-logo-corner {
-    max-height: 30px;
+    max-height: 32px;
     width: auto;
     mix-blend-mode: multiply;
     margin-right: 8px;
+    transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
-  body.theme-nocturno .tb-logo-corner { filter: invert(0.9) hue-rotate(180deg); }
+  body.theme-nocturno .tb-logo-corner { 
+    filter: invert(1) brightness(1.2); 
+    mix-blend-mode: screen;
+  }
   
   .tb-btn-small {
     font-family: 'Literata', serif;
@@ -174,7 +184,7 @@
   body.theme-nocturno .tb-btn-small { border-color: rgba(255,255,255,0.1); }
   .tb-btn-small:hover { background: var(--app-bg); border-color: var(--ink-soft); }
   
-  /* Bloque central de metadata (Título y Autor subidos) */
+  /* Bloque central de metadata */
   .tb-meta-center {
     display: flex;
     flex-direction: column;
@@ -257,7 +267,7 @@
   .chapter-body {
     font-family: 'Literata', Georgia, serif;
     font-size: 18px;
-    line-height: 1.9; /* Espaciado ultra-legible de e-reader */
+    line-height: 1.9;
     color: var(--ink);
     background: transparent;
     border: none;
@@ -510,6 +520,7 @@ function addChapter(titleVal = '', bodyVal = '', forceFocus = true) {
   updateWordCount();
 }
 
+// Controlar el foco activo en Modo Zen
 function setFocusTarget(el) {
   if (document.body.classList.contains('focus-mode')) {
     document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
@@ -598,7 +609,6 @@ function checkActiveBackup() {
 }
 
 function loadLocal() {
-  // Cargar preferencia de tema
   const savedTheme = localStorage.getItem('escritura_theme_pref') || 'editorial';
   const targetDot = document.querySelector(`.dot-${savedTheme}`);
   changeTheme(savedTheme, targetDot);
