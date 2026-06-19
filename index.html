@@ -43,7 +43,7 @@
   .db-card { text-align: center; max-width: 440px; width: 100%; }
 
   .db-logo {
-    max-width: 260px;
+    max-width: 240px;
     width: 100%;
     height: auto;
     mix-blend-mode: multiply;
@@ -66,21 +66,21 @@
     text-align: center;
   }
   body.theme-nocturno .db-btn { border-color: rgba(255,255,255,0.08); }
-  .db-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-color: var(--ink-soft); }
+  .db-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); border-color: var(--ink-soft); }
   .db-btn.primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
-  .db-btn.primary:hover { opacity: 0.9; }
+  .db-btn.primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
   .theme-section h3 {
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    color: var(--ink-ghost);
     margin-bottom: 16px;
     font-weight: 500;
   }
   .theme-options { display: flex; justify-content: center; gap: 16px; }
   .theme-dot {
-    width: 28px; height: 28px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid transparent;
@@ -89,12 +89,12 @@
   }
   .theme-dot:hover { transform: scale(1.15); }
   .theme-dot.active { border-color: var(--accent); transform: scale(1.1); }
-  .dot-editorial { background: #fbf9f5; }
-  .dot-crema     { background: #fffdf9; }
-  .dot-bosque    { background: #f3f6f3; }
-  .dot-nocturno  { background: #1e2022; }
+  .dot-editorial { background: #e3ded5; }
+  .dot-crema     { background: #ebdec9; }
+  .dot-bosque    { background: #cbd4cb; }
+  .dot-nocturno  { background: #1e2022; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15); }
 
-  /* ── EDITOR ── */
+  /* ── TOOLBAR ── */
   #editor-view { display: none; }
 
   #toolbar {
@@ -106,22 +106,21 @@
     align-items: center;
     padding: 10px 24px;
     background: var(--app-bg);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    transition: opacity 0.4s ease, background 0.4s ease;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: background 0.4s ease;
   }
   body.theme-nocturno #toolbar { border-bottom-color: rgba(255,255,255,0.05); }
 
-  .tb-left { display: flex; align-items: center; gap: 10px; }
+  .tb-left { display: flex; align-items: center; gap: 8px; }
   .tb-logo-corner {
-    max-height: 32px;
-    width: auto;
+    max-height: 30px; width: auto;
     mix-blend-mode: multiply;
-    margin-right: 8px;
+    margin-right: 6px;
     transition: filter 0.3s ease, mix-blend-mode 0.3s ease;
   }
   body.theme-nocturno .tb-logo-corner { filter: invert(1) brightness(1.2); mix-blend-mode: screen; }
 
-  .tb-btn-small {
+  .tb-btn {
     font-family: 'Literata', serif;
     font-size: 13px;
     padding: 5px 12px;
@@ -130,55 +129,160 @@
     color: var(--ink);
     border-radius: 4px;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    white-space: nowrap;
   }
-  body.theme-nocturno .tb-btn-small { border-color: rgba(255,255,255,0.1); }
-  .tb-btn-small:hover { background: var(--app-bg); border-color: var(--ink-soft); }
+  body.theme-nocturno .tb-btn { border-color: rgba(255,255,255,0.1); }
+  .tb-btn:hover { background: var(--app-bg); border-color: var(--ink-soft); }
 
-  .tb-meta-center { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .tb-meta-center { display: flex; flex-direction: column; align-items: center; gap: 3px; }
   .meta-input-title {
     font-family: 'IM Fell English', serif;
     font-size: 18px;
     color: var(--ink);
     background: transparent;
-    border: none;
-    outline: none;
+    border: none; outline: none;
     text-align: center;
-    width: 80%;
+    width: 100%;
     transition: color 0.4s;
   }
   .meta-input-author {
     font-family: 'Literata', serif;
-    font-size: 14px;
+    font-size: 13px;
     font-style: italic;
     color: var(--ink-soft);
     background: transparent;
-    border: none;
-    outline: none;
+    border: none; outline: none;
     text-align: center;
-    width: 70%;
+    width: 100%;
     transition: color 0.4s;
   }
-  .meta-input-title::placeholder, .meta-input-author::placeholder { color: var(--ink-ghost); }
+  .meta-input-title::placeholder,
+  .meta-input-author::placeholder { color: var(--ink-ghost); }
 
   .tb-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--ink-soft);
+    display: flex; align-items: center;
+    justify-content: flex-end; gap: 10px;
+    font-size: 13px; color: var(--ink-soft);
   }
-
-  /* Indicador de guardado */
   #save-indicator {
-    font-size: 12px;
-    color: var(--accent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    font-size: 12px; color: var(--accent);
+    opacity: 0; transition: opacity 0.4s ease;
     pointer-events: none;
   }
   #save-indicator.show { opacity: 1; }
+
+  /* ── BARRA LATERAL ── */
+  #sidebar {
+    position: fixed;
+    left: 0; top: 54px; bottom: 0;
+    width: 220px;
+    background: var(--app-bg);
+    border-right: 1px solid rgba(0,0,0,0.07);
+    padding: 24px 0 24px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease, background 0.4s ease;
+    z-index: 90;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  body.theme-nocturno #sidebar { border-right-color: rgba(255,255,255,0.05); }
+
+  /* Trigger zone invisible en el borde izquierdo */
+  #sidebar-trigger {
+    position: fixed;
+    left: 0; top: 54px; bottom: 0;
+    width: 16px;
+    z-index: 95;
+    cursor: pointer;
+  }
+  #sidebar-trigger:hover ~ #sidebar,
+  #sidebar:hover,
+  #sidebar.pinned {
+    transform: translateX(0);
+  }
+  /* Indicador visual sutil en el borde */
+  #sidebar-trigger::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%; transform: translateY(-50%);
+    width: 3px; height: 40px;
+    background: var(--ink-ghost);
+    border-radius: 0 2px 2px 0;
+    opacity: 0.4;
+    transition: opacity 0.2s, height 0.2s;
+  }
+  #sidebar-trigger:hover::after { opacity: 0.8; height: 56px; }
+
+  .sidebar-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-ghost);
+    padding: 0 20px 12px;
+    font-weight: 500;
+  }
+
+  #sidebar-chapters { flex: 1; }
+
+  .sidebar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .sidebar-item:hover { background: rgba(0,0,0,0.04); }
+  body.theme-nocturno .sidebar-item:hover { background: rgba(255,255,255,0.04); }
+  .sidebar-item.active {
+    border-left-color: var(--accent);
+    background: rgba(0,0,0,0.03);
+  }
+  body.theme-nocturno .sidebar-item.active { background: rgba(255,255,255,0.03); }
+
+  .sidebar-num {
+    font-family: 'IM Fell English', serif;
+    font-size: 12px;
+    color: var(--accent);
+    font-style: italic;
+    white-space: nowrap;
+    padding-top: 1px;
+    min-width: 24px;
+  }
+  .sidebar-title {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
+  }
+  .sidebar-words {
+    font-size: 11px;
+    color: var(--ink-ghost);
+    margin-top: 1px;
+  }
+
+  .sidebar-add {
+    margin: 16px 20px 0;
+    font-family: 'Literata', serif;
+    font-size: 13px;
+    padding: 8px;
+    border: 1px dashed rgba(0,0,0,0.15);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    width: calc(100% - 40px);
+  }
+  body.theme-nocturno .sidebar-add { border-color: rgba(255,255,255,0.1); }
+  .sidebar-add:hover { border-color: var(--accent); color: var(--accent); }
 
   /* ── PAPEL ── */
   #main-paper {
@@ -186,9 +290,9 @@
     margin: 90px auto 120px;
     background: var(--paper);
     padding: 80px 80px 100px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-    border-radius: 4px;
-    transition: background 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: -4px 0 12px rgba(0,0,0,0.04), 4px 0 24px rgba(0,0,0,0.06);
+    border-radius: 2px;
+    transition: background 0.4s ease;
   }
 
   #chapters { display: flex; flex-direction: column; }
@@ -197,28 +301,24 @@
   .chapter {
     position: relative;
     padding: 48px 0;
-    transition: filter 0.35s ease, opacity 0.35s ease;
+    transition: opacity 0.2s;
   }
-
-  /* Separador ornamental entre capítulos */
-  .chapter + .chapter {
-    border-top: 1px solid rgba(0,0,0,0.07);
-  }
+  .chapter + .chapter { border-top: 1px solid rgba(0,0,0,0.07); }
   body.theme-nocturno .chapter + .chapter { border-top-color: rgba(255,255,255,0.06); }
 
   .chapter-ornament {
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--ink-ghost);
-    letter-spacing: 0.3em;
+    letter-spacing: 0.35em;
     margin-bottom: 36px;
     user-select: none;
   }
 
-  .chapter-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .chapter-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
   .chapter-num {
     font-family: 'IM Fell English', serif;
-    font-size: 15px;
+    font-size: 14px;
     color: var(--accent);
     font-style: italic;
     white-space: nowrap;
@@ -229,59 +329,72 @@
     font-size: 24px;
     color: var(--ink);
     background: transparent;
-    border: none;
-    outline: none;
+    border: none; outline: none;
     width: 100%;
     transition: color 0.4s;
   }
   .chapter-title-input::placeholder { color: var(--ink-ghost); font-style: italic; }
 
-  /* Cuerpo: sin sangría en primer párrafo, con sangría en los demás */
   .chapter-body {
     font-family: 'Literata', Georgia, serif;
-    font-size: 18px;
-    line-height: 1.9;
+    font-size: 17px;
+    line-height: 1.85;
     color: var(--ink);
     background: transparent;
-    border: none;
-    outline: none;
+    border: none; outline: none;
     width: 100%;
     resize: none;
     overflow: hidden;
-    min-height: 180px;
+    min-height: 160px;
     text-align: justify;
     transition: color 0.4s;
   }
   .chapter-body::placeholder { color: var(--ink-ghost); font-style: italic; }
 
-  .chapter-delete {
-    position: absolute;
-    top: 48px;
-    right: 0;
-    background: none;
-    border: none;
+  /* Contador de palabras por capítulo */
+  .chapter-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+  .chapter-wordcount {
+    font-size: 11px;
+    color: var(--ink-ghost);
+    letter-spacing: 0.04em;
+  }
+
+  /* Controles del capítulo: reordenar + eliminar */
+  .chapter-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .chapter:hover .chapter-controls { opacity: 1; }
+  .chapter-ctrl-btn {
+    background: none; border: none;
     cursor: pointer;
     color: var(--ink-ghost);
-    font-size: 18px;
-    opacity: 0;
-    transition: opacity 0.2s, color 0.2s;
-    padding: 2px 6px;
+    font-size: 14px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1;
   }
-  .chapter:hover .chapter-delete { opacity: 1; }
-  .chapter-delete:hover { color: #c0392b; }
+  .chapter-ctrl-btn:hover { color: var(--ink-soft); background: rgba(0,0,0,0.05); }
+  .chapter-ctrl-btn.delete:hover { color: #c0392b; background: #fdecea; }
+  body.theme-nocturno .chapter-ctrl-btn:hover { background: rgba(255,255,255,0.06); }
 
   /* ── AGREGAR CAPÍTULO ── */
   #add-chapter-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding-top: 48px;
-    transition: opacity 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; padding-top: 48px;
   }
   #add-chapter-btn {
     font-size: 20px;
-    width: 36px; height: 36px;
+    width: 34px; height: 34px;
     border-radius: 50%;
     background: transparent;
     border: 1px solid rgba(0,0,0,0.12);
@@ -293,55 +406,28 @@
   body.theme-nocturno #add-chapter-btn { border-color: rgba(255,255,255,0.1); }
   #add-chapter-btn:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
   #add-chapter-label {
-    font-size: 13px;
-    color: var(--ink-ghost);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    user-select: none;
-    transition: color 0.2s;
+    font-size: 12px; color: var(--ink-ghost);
+    letter-spacing: 0.07em; text-transform: uppercase;
+    cursor: pointer; user-select: none; transition: color 0.2s;
   }
   #add-chapter-label:hover { color: var(--ink-soft); }
-
-  /* ── MODO ZEN ── */
-  body.focus-mode #toolbar {
-    opacity: 0;
-    pointer-events: none;
-  }
-  body.focus-mode #toolbar:hover {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  body.focus-mode #hotkey-help { opacity: 0 !important; }
-  body.focus-mode #add-chapter-wrap { opacity: 0; pointer-events: none; }
-  body.focus-mode .chapter {
-    filter: blur(2px);
-    opacity: 0.25;
-    pointer-events: none;
-  }
-  body.focus-mode .chapter.active-focus {
-    filter: none !important;
-    opacity: 1 !important;
-    pointer-events: auto;
-  }
 
   /* ── HINT ATAJOS ── */
   #hotkey-help {
     position: fixed;
-    bottom: 20px; left: 24px;
-    font-size: 11px;
-    color: var(--ink-soft);
-    opacity: 0.3;
-    letter-spacing: 0.05em;
+    bottom: 18px; left: 24px;
+    font-size: 11px; color: var(--ink-soft);
+    opacity: 0.25; letter-spacing: 0.05em;
     text-transform: uppercase;
     pointer-events: none;
-    transition: opacity 0.3s;
-    z-index: 150;
+    transition: opacity 0.3s; z-index: 150;
   }
 
   /* ── PRINT ── */
   @media print {
-    #toolbar, #add-chapter-wrap, .chapter-delete, #hotkey-help, .chapter-ornament { display: none !important; }
+    #toolbar, #sidebar, #sidebar-trigger, #add-chapter-wrap,
+    .chapter-controls, .chapter-footer, #hotkey-help,
+    .chapter-ornament { display: none !important; }
     body { background: white !important; }
     #main-paper { padding: 0 !important; max-width: 100% !important; margin: 0 !important; box-shadow: none !important; }
     .chapter { page-break-before: always; margin-top: 30mm; padding: 0; border: none !important; }
@@ -358,15 +444,15 @@
   <div class="db-card">
     <img src="Escribir simple. Sin distracciones. (1).png" alt="Té de Algo Logo" class="db-logo">
     <div class="db-actions">
-      <button class="db-btn primary" onclick="startNewManuscrito()">Nuevo Manuscrito</button>
-      <button class="db-btn" id="db-continue-btn" onclick="continueManuscrito()" style="display:none;">Continuar Escribiendo</button>
+      <button class="db-btn primary" onclick="startNewProyecto()">Nuevo Proyecto</button>
+      <button class="db-btn" id="db-continue-btn" onclick="continueProyecto()" style="display:none;">Continuar Escribiendo</button>
       <label class="db-btn" style="cursor:pointer;">
-        Cargar Manuscrito (.html)
+        Cargar Proyecto (.html)
         <input type="file" accept=".html" style="display:none" onchange="importHTML(event)">
       </label>
     </div>
     <div class="theme-section">
-      <h3>Tema de Interfaz</h3>
+      <h3>Tema</h3>
       <div class="theme-options">
         <span class="theme-dot dot-editorial active" title="Editorial" onclick="changeTheme('editorial', this)"></span>
         <span class="theme-dot dot-crema" title="Cálido Crema" onclick="changeTheme('crema', this)"></span>
@@ -379,16 +465,17 @@
 
 <!-- EDITOR -->
 <div id="editor-view">
+
   <div id="toolbar">
     <div class="tb-left">
       <img src="Escribir simple. Sin distracciones. (1).png" class="tb-logo-corner" alt="Logo">
-      <button class="tb-btn-small" onclick="goBackToDashboard()">← Inicio</button>
-      <button class="tb-btn-small" onclick="exportHTML()">Exportar</button>
-      <button id="zen-indicator" class="tb-btn-small" onclick="toggleFocusMode()">Modo Zen</button>
+      <button class="tb-btn" onclick="goBackToDashboard()">← Inicio</button>
+      <button class="tb-btn" onclick="exportHTML()">Exportar</button>
+      <button class="tb-btn" onclick="exportPDF()">PDF</button>
     </div>
     <div class="tb-meta-center">
-      <input type="text" id="meta-title" class="meta-input-title" placeholder="Título del Libro" oninput="triggerSave()">
-      <input type="text" id="meta-author" class="meta-input-author" placeholder="Nombre del Autor" oninput="triggerSave()">
+      <input type="text" id="meta-title" class="meta-input-title" placeholder="Título del proyecto" oninput="triggerSave(); updateSidebar()">
+      <input type="text" id="meta-author" class="meta-input-author" placeholder="Nombre del autor" oninput="triggerSave()">
     </div>
     <div class="tb-right">
       <span id="save-indicator">Guardado ✓</span>
@@ -396,7 +483,15 @@
     </div>
   </div>
 
-  <div id="hotkey-help">Ctrl+F: Zen &nbsp;|&nbsp; Ctrl+Enter: Nuevo Cap. &nbsp;|&nbsp; Ctrl+S: Exportar</div>
+  <!-- TRIGGER + SIDEBAR -->
+  <div id="sidebar-trigger"></div>
+  <div id="sidebar">
+    <div class="sidebar-label">Capítulos</div>
+    <div id="sidebar-chapters"></div>
+    <button class="sidebar-add" onclick="addChapter()">+ Nuevo capítulo</button>
+  </div>
+
+  <div id="hotkey-help">Ctrl+Enter: Nuevo cap. &nbsp;|&nbsp; Ctrl+S: Exportar</div>
 
   <div id="main-paper">
     <div id="chapters"></div>
@@ -405,19 +500,24 @@
       <span id="add-chapter-label" onclick="addChapter()">Nuevo capítulo</span>
     </div>
   </div>
+
 </div>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 let chapterCount = 0;
 let currentThemeClass = 'theme-editorial';
 let saveTimeout = null;
 let saveIndicatorTimeout = null;
+let activeSidebarItem = null;
 
 // ── VISTAS ──
-function startNewManuscrito() {
+function startNewProyecto() {
   const hasContent = localStorage.getItem('escritura_title_backup') ||
-    (localStorage.getItem('escritura_chapters_backup') || '[]') !== '[]';
-  if (hasContent && !confirm('¿Empezar un nuevo manuscrito? Esto limpiará el espacio actual.')) return;
+    hasRealChapters(localStorage.getItem('escritura_chapters_backup'));
+  if (hasContent && !confirm('¿Empezar un nuevo proyecto? El actual se perderá si no lo exportaste.')) return;
   document.getElementById('meta-title').value = '';
   document.getElementById('meta-author').value = '';
   document.getElementById('chapters').innerHTML = '';
@@ -427,19 +527,24 @@ function startNewManuscrito() {
   saveLocal();
 }
 
-function continueManuscrito() { switchToEditor(); }
+function continueProyecto() { switchToEditor(); }
 
 function switchToEditor() {
   document.getElementById('dashboard-view').style.display = 'none';
   document.getElementById('editor-view').style.display = 'block';
   resizeAll();
   updateWordCount();
+  updateSidebar();
 }
 
 function goBackToDashboard() {
   document.getElementById('editor-view').style.display = 'none';
   document.getElementById('dashboard-view').style.display = 'flex';
   checkActiveBackup();
+}
+
+function hasRealChapters(raw) {
+  try { return JSON.parse(raw || '[]').some(c => c.title || c.body); } catch(e) { return false; }
 }
 
 // ── TEMAS ──
@@ -459,11 +564,22 @@ function autoResize(el) {
 }
 function resizeAll() { document.querySelectorAll('textarea').forEach(autoResize); }
 
+function chapterWordCount(ch) {
+  const text = (ch.querySelector('.chapter-title-input').value + ' ' + ch.querySelector('.chapter-body').value).trim();
+  return text ? text.split(/\s+/).filter(w => w).length : 0;
+}
+
 function updateWordCount() {
   const texts = [...document.querySelectorAll('.chapter-body, .chapter-title-input, #meta-title, #meta-author')]
     .map(el => el.value).join(' ');
   const words = texts.trim().split(/\s+/).filter(w => w.length > 0).length;
   document.getElementById('wordcount').textContent = words.toLocaleString('es-AR') + ' palabras';
+
+  // Actualizar contadores por capítulo
+  document.querySelectorAll('.chapter').forEach(ch => {
+    const wc = ch.querySelector('.chapter-wordcount');
+    if (wc) wc.textContent = chapterWordCount(ch).toLocaleString('es-AR') + ' pal.';
+  });
 }
 
 function addChapter(titleVal = '', bodyVal = '', forceFocus = true) {
@@ -473,83 +589,133 @@ function addChapter(titleVal = '', bodyVal = '', forceFocus = true) {
   div.dataset.id = chapterCount;
 
   const num = toRoman(chapterCount);
-  const isFirst = chapterCount === 1;
+  const isFirst = document.querySelectorAll('.chapter').length === 0;
 
   div.innerHTML = `
-    <button class="chapter-delete" title="Eliminar capítulo" onclick="deleteChapter(this)">×</button>
     ${!isFirst ? '<div class="chapter-ornament">· · ·</div>' : ''}
     <div class="chapter-header">
-      <span class="chapter-num">Capítulo ${num}</span>
+      <span class="chapter-num">Cap. ${num}</span>
       <input class="chapter-title-input" type="text" placeholder="Título opcional" value="${escHtml(titleVal)}"
-        onfocus="setFocusTarget(this)" oninput="triggerSave(); updateWordCount()">
+        oninput="triggerSave(); updateWordCount(); updateSidebar()">
     </div>
     <textarea class="chapter-body" placeholder="Empezá a escribir acá..."
-      onfocus="setFocusTarget(this)" oninput="autoResize(this); triggerSave(); updateWordCount()">${escHtml(bodyVal)}</textarea>
+      oninput="autoResize(this); triggerSave(); updateWordCount(); updateSidebar()"
+      onfocus="highlightSidebarItem(this.closest('.chapter'))">${escHtml(bodyVal)}</textarea>
+    <div class="chapter-footer">
+      <span class="chapter-wordcount">0 pal.</span>
+      <div class="chapter-controls">
+        <button class="chapter-ctrl-btn" title="Subir" onclick="moveChapter(this, -1)">↑</button>
+        <button class="chapter-ctrl-btn" title="Bajar" onclick="moveChapter(this, 1)">↓</button>
+        <button class="chapter-ctrl-btn delete" title="Eliminar" onclick="deleteChapter(this)">×</button>
+      </div>
+    </div>
   `;
 
   document.getElementById('chapters').appendChild(div);
   const ta = div.querySelector('.chapter-body');
   autoResize(ta);
-  if (forceFocus) { setTimeout(() => ta.focus(), 50); }
+  if (forceFocus) setTimeout(() => ta.focus(), 50);
   updateWordCount();
+  updateSidebar();
 }
 
-function setFocusTarget(el) {
-  if (document.body.classList.contains('focus-mode')) {
-    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
-    el.closest('.chapter').classList.add('active-focus');
-  }
+function moveChapter(btn, dir) {
+  const ch = btn.closest('.chapter');
+  const chapters = [...document.getElementById('chapters').children];
+  const idx = chapters.indexOf(ch);
+  const target = chapters[idx + dir];
+  if (!target) return;
+  const container = document.getElementById('chapters');
+  if (dir === -1) container.insertBefore(ch, target);
+  else container.insertBefore(target, ch);
+  renumberChapters();
+  updateSidebar();
+  saveLocal();
 }
 
 function deleteChapter(btn) {
+  if (document.querySelectorAll('.chapter').length === 1) {
+    alert('El proyecto necesita al menos un capítulo.');
+    return;
+  }
   if (!confirm('¿Eliminar este capítulo?')) return;
   btn.closest('.chapter').remove();
   renumberChapters();
   updateWordCount();
+  updateSidebar();
   saveLocal();
 }
 
 function renumberChapters() {
   document.querySelectorAll('.chapter').forEach((ch, i) => {
-    ch.querySelector('.chapter-num').textContent = 'Capítulo ' + toRoman(i + 1);
-    // El ornamento solo aparece desde el segundo capítulo
+    ch.querySelector('.chapter-num').textContent = 'Cap. ' + toRoman(i + 1);
     const orn = ch.querySelector('.chapter-ornament');
     if (i === 0 && orn) orn.remove();
     if (i > 0 && !orn) {
-      const header = ch.querySelector('.chapter-header');
-      const div = document.createElement('div');
-      div.className = 'chapter-ornament';
-      div.textContent = '· · ·';
-      ch.insertBefore(div, header);
+      const d = document.createElement('div');
+      d.className = 'chapter-ornament';
+      d.textContent = '· · ·';
+      ch.insertBefore(d, ch.querySelector('.chapter-header'));
     }
   });
   chapterCount = document.querySelectorAll('.chapter').length;
 }
 
-// ── MODO ZEN ──
-function toggleFocusMode() {
-  const isFocus = document.body.classList.toggle('focus-mode');
-  document.getElementById('zen-indicator').textContent = isFocus ? 'Zen: ON' : 'Modo Zen';
-  if (isFocus) {
-    const activeEl = document.activeElement;
-    if (activeEl && activeEl.closest('.chapter')) {
-      activeEl.closest('.chapter').classList.add('active-focus');
-    } else {
-      const first = document.querySelector('.chapter');
-      if (first) { first.classList.add('active-focus'); first.querySelector('.chapter-body').focus(); }
-    }
-  } else {
-    document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('active-focus'));
-  }
+// ── SIDEBAR ──
+function updateSidebar() {
+  const container = document.getElementById('sidebar-chapters');
+  const chapters = [...document.querySelectorAll('.chapter')];
+  container.innerHTML = '';
+  chapters.forEach((ch, i) => {
+    const titleVal = ch.querySelector('.chapter-title-input').value || 'Sin título';
+    const wc = chapterWordCount(ch);
+    const item = document.createElement('div');
+    item.className = 'sidebar-item';
+    item.dataset.idx = i;
+    item.innerHTML = `
+      <span class="sidebar-num">${toRoman(i+1)}</span>
+      <div>
+        <div class="sidebar-title">${escHtml(titleVal)}</div>
+        <div class="sidebar-words">${wc.toLocaleString('es-AR')} pal.</div>
+      </div>
+    `;
+    item.onclick = () => {
+      ch.querySelector('.chapter-body').focus();
+      ch.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      highlightSidebarItem(ch);
+    };
+    container.appendChild(item);
+  });
 }
+
+function highlightSidebarItem(ch) {
+  const chapters = [...document.querySelectorAll('.chapter')];
+  const idx = chapters.indexOf(ch);
+  document.querySelectorAll('.sidebar-item').forEach((item, i) => {
+    item.classList.toggle('active', i === idx);
+  });
+}
+
+// Actualizar item activo al hacer scroll
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    const chapters = [...document.querySelectorAll('.chapter')];
+    let activeIdx = 0;
+    chapters.forEach((ch, i) => {
+      if (ch.getBoundingClientRect().top < window.innerHeight * 0.4) activeIdx = i;
+    });
+    document.querySelectorAll('.sidebar-item').forEach((item, i) => {
+      item.classList.toggle('active', i === activeIdx);
+    });
+  }, 50);
+});
 
 // ── GUARDADO ──
 function triggerSave() {
   clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => {
-    saveLocal();
-    showSaveIndicator();
-  }, 800);
+  saveTimeout = setTimeout(() => { saveLocal(); showSaveIndicator(); }, 800);
 }
 
 function showSaveIndicator() {
@@ -574,33 +740,28 @@ function saveLocal() {
 
 function checkActiveBackup() {
   const title = localStorage.getItem('escritura_title_backup');
-  const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
-  let hasChapters = false;
-  try { hasChapters = JSON.parse(chaptersRaw || '[]').some(c => c.title || c.body); } catch(e) {}
-  const show = title || hasChapters;
-  document.getElementById('db-continue-btn').style.display = show ? 'block' : 'none';
+  const raw = localStorage.getItem('escritura_chapters_backup');
+  document.getElementById('db-continue-btn').style.display =
+    (title || hasRealChapters(raw)) ? 'block' : 'none';
 }
 
 function loadLocal() {
   const savedTheme = localStorage.getItem('escritura_theme_pref') || 'editorial';
-  const targetDot = document.querySelector('.dot-' + savedTheme);
-  changeTheme(savedTheme, targetDot);
+  changeTheme(savedTheme, document.querySelector('.dot-' + savedTheme));
 
   const title = localStorage.getItem('escritura_title_backup') || '';
   const author = localStorage.getItem('escritura_author_backup') || '';
-  const chaptersRaw = localStorage.getItem('escritura_chapters_backup');
+  let chapters = [];
+  try { chapters = JSON.parse(localStorage.getItem('escritura_chapters_backup') || '[]'); } catch(e) {}
 
   document.getElementById('meta-title').value = title;
   document.getElementById('meta-author').value = author;
-
-  let chapters = [];
-  try { chapters = JSON.parse(chaptersRaw || '[]'); } catch(e) {}
   chapters.forEach(ch => addChapter(ch.title, ch.body, false));
   updateWordCount();
   checkActiveBackup();
 }
 
-// ── EXPORT / IMPORT ──
+// ── EXPORT HTML ──
 function exportHTML() {
   saveLocal();
   const title = document.getElementById('meta-title').value || 'sin-titulo';
@@ -623,24 +784,24 @@ function exportHTML() {
 <meta name="x-escritura-export" content="true">
 <meta name="x-escritura-title" content="${escHtml(title)}">
 <meta name="x-escritura-author" content="${escHtml(author)}">
-<meta name="x-escritura-chapters" content='${chaptersData.replace(/'/g, "&apos;")}'>
+<meta name="x-escritura-chapters" content='${chaptersData.replace(/'/g,"&apos;")}'>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Literata:ital,wght@0,400;1,400&display=swap');
-  body{font-family:'Literata',Georgia,serif;max-width:620px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#fbf9f5;font-size:18px;line-height:1.9}
-  h1{font-family:'IM Fell English',serif;font-size:36px;text-align:center;margin-bottom:8px}
+  body{font-family:'Literata',Georgia,serif;max-width:620px;margin:60px auto;padding:0 40px;color:#1a1a1a;background:#fbf9f5;font-size:17px;line-height:1.85}
+  h1{font-family:'IM Fell English',serif;font-size:34px;text-align:center;margin-bottom:8px}
   .author{text-align:center;font-style:italic;color:#555;margin-bottom:60px}
-  .chapter-num{font-family:'IM Fell English',serif;font-size:13px;color:#2e432e;letter-spacing:.06em;text-transform:uppercase;font-style:italic;margin-bottom:6px}
-  h2{font-family:'IM Fell English',serif;font-size:24px;margin-bottom:28px}
+  .chapter-num{font-family:'IM Fell English',serif;font-size:12px;color:#2e432e;letter-spacing:.06em;text-transform:uppercase;font-style:italic;margin-bottom:6px}
+  h2{font-family:'IM Fell English',serif;font-size:22px;margin-bottom:24px}
   p{margin-bottom:0;text-indent:2em;text-align:justify}
   p:first-of-type,h2+p{text-indent:0}
-  .ornament{text-align:center;color:#b8b4aa;letter-spacing:.3em;margin:48px 0 36px}
+  .ornament{text-align:center;color:#b8b4aa;letter-spacing:.35em;margin:48px 0 36px;font-size:13px}
 </style>
 </head>
 <body>
 <h1>${escHtml(title)}</h1>
 ${author ? `<p class="author">${escHtml(author)}</p>` : ''}
 ${chapters.map((ch, i) => `
-<div class="ornament">${i > 0 ? '· · ·' : ''}</div>
+${i > 0 ? '<div class="ornament">· · ·</div>' : ''}
 <div class="chapter-num">Capítulo ${toRoman(i+1)}</div>
 ${ch.title ? `<h2>${escHtml(ch.title)}</h2>` : ''}
 ${ch.body.split('\n').filter(l => l.trim()).map(l => `<p>${escHtml(l)}</p>`).join('\n')}
@@ -651,22 +812,119 @@ ${ch.body.split('\n').filter(l => l.trim()).map(l => `<p>${escHtml(l)}</p>`).joi
   download(html, slugify(title) + '.html', 'text/html');
 }
 
+// ── EXPORT PDF ──
+function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const title = document.getElementById('meta-title').value || 'Sin título';
+  const author = document.getElementById('meta-author').value || '';
+
+  const doc = new jsPDF({ unit: 'mm', format: 'a5', orientation: 'portrait' });
+
+  const marginX = 18;
+  const marginTop = 20;
+  const marginBottom = 20;
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const maxW = pageW - marginX * 2;
+  let y = marginTop;
+  let pageNum = 1;
+
+  function addPageNumber() {
+    doc.setFont('Times', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(150);
+    doc.text(String(pageNum), pageW / 2, pageH - 8, { align: 'center' });
+    doc.setTextColor(30);
+  }
+
+  function checkPageBreak(neededH) {
+    if (y + neededH > pageH - marginBottom) {
+      addPageNumber();
+      doc.addPage();
+      pageNum++;
+      y = marginTop;
+    }
+  }
+
+  function writeLine(text, fontSize, fontStyle, align, color, extraSpacingAfter) {
+    doc.setFontSize(fontSize);
+    doc.setFont('Times', fontStyle);
+    if (color) doc.setTextColor(...color);
+    const lines = doc.splitTextToSize(text, maxW);
+    lines.forEach(line => {
+      checkPageBreak(fontSize * 0.4);
+      doc.text(line, align === 'center' ? pageW / 2 : marginX, y, { align: align || 'left' });
+      y += fontSize * 0.42;
+    });
+    if (color) doc.setTextColor(30);
+    y += extraSpacingAfter || 0;
+  }
+
+  // Portada
+  y = pageH * 0.35;
+  writeLine(title, 22, 'bold', 'center', null, 6);
+  if (author) writeLine(author, 12, 'italic', 'center', [100,100,100], 0);
+  addPageNumber();
+  doc.addPage(); pageNum++; y = marginTop;
+
+  // Capítulos
+  document.querySelectorAll('.chapter').forEach((ch, i) => {
+    if (i > 0) {
+      checkPageBreak(20);
+      doc.setFontSize(10);
+      doc.setTextColor(180);
+      doc.text('· · ·', pageW / 2, y, { align: 'center' });
+      doc.setTextColor(30);
+      y += 12;
+    }
+
+    const chTitle = ch.querySelector('.chapter-title-input').value;
+    const chBody = ch.querySelector('.chapter-body').value;
+
+    writeLine('Capítulo ' + toRoman(i + 1), 10, 'italic', 'left', [46,67,46], 2);
+    if (chTitle) writeLine(chTitle, 16, 'bold', 'left', null, 6);
+
+    const paragraphs = chBody.split('\n').filter(l => l.trim());
+    paragraphs.forEach((para, pi) => {
+      doc.setFontSize(11);
+      doc.setFont('Times', 'normal');
+      const lines = doc.splitTextToSize(para, maxW - (pi > 0 ? 6 : 0));
+      lines.forEach((line, li) => {
+        checkPageBreak(6);
+        const x = (pi > 0 && li === 0) ? marginX + 6 : marginX;
+        doc.text(line, x, y);
+        y += 5.5;
+      });
+      y += 1;
+    });
+    y += 6;
+  });
+
+  addPageNumber();
+  doc.save(slugify(title) + '.pdf');
+}
+
+// ── IMPORT ──
 function importHTML(event) {
   const file = event.target.files[0];
   if (!file) return;
+  const hasContent = hasRealChapters(localStorage.getItem('escritura_chapters_backup')) ||
+    localStorage.getItem('escritura_title_backup');
+  if (hasContent && !confirm('¿Cargar este proyecto? El contenido actual se perderá si no lo exportaste.')) {
+    event.target.value = ''; return;
+  }
   const reader = new FileReader();
   reader.onload = e => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(e.target.result, 'text/html');
     if (!doc.querySelector('meta[name="x-escritura-export"]')) {
-      alert('Este archivo no corresponde a un export de Té de Algo.');
+      alert('Este archivo no es un proyecto de Té de Algo.');
       return;
     }
     const title = doc.querySelector('meta[name="x-escritura-title"]')?.content || '';
     const author = doc.querySelector('meta[name="x-escritura-author"]')?.content || '';
-    const chaptersRaw = doc.querySelector('meta[name="x-escritura-chapters"]')?.content || '[]';
     let chapters = [];
-    try { chapters = JSON.parse(chaptersRaw); } catch(err) {}
+    try { chapters = JSON.parse(doc.querySelector('meta[name="x-escritura-chapters"]')?.content || '[]'); } catch(e) {}
 
     document.getElementById('meta-title').value = title;
     document.getElementById('meta-author').value = author;
@@ -683,35 +941,29 @@ function importHTML(event) {
 
 // ── UTILS ──
 function toRoman(n) {
-  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
-  const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
-  let r = '';
-  for (let i = 0; i < vals.length; i++) while (n >= vals[i]) { r += syms[i]; n -= vals[i]; }
+  const vals=[1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+  let r=''; for(let i=0;i<vals.length;i++) while(n>=vals[i]){r+=syms[i];n-=vals[i];}
   return r;
 }
-
 function escHtml(str) {
-  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 function download(content, filename, mime) {
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([content], { type: mime }));
-  a.download = filename;
-  a.click();
+  a.href = URL.createObjectURL(new Blob([content],{type:mime}));
+  a.download = filename; a.click();
   URL.revokeObjectURL(a.href);
 }
-
 function slugify(str) {
-  return (str || '').toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'') || 'manuscrito';
+  return (str||'').toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'')||'proyecto';
 }
 
 // ── ATAJOS ──
 document.addEventListener('keydown', e => {
   const mod = navigator.platform.toUpperCase().includes('MAC') ? e.metaKey : e.ctrlKey;
-  if (mod && e.key === 'f') { e.preventDefault(); toggleFocusMode(); }
-  else if (mod && e.key === 'Enter') { e.preventDefault(); addChapter(); }
-  else if (mod && e.key === 's') { e.preventDefault(); exportHTML(); }
+  if (mod && e.key==='Enter') { e.preventDefault(); addChapter(); }
+  else if (mod && e.key==='s') { e.preventDefault(); exportHTML(); }
 });
 
 window.onload = loadLocal;
