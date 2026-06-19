@@ -172,6 +172,50 @@
   }
   #save-indicator.show { opacity: 1; }
 
+  /* ── MENÚ GUARDAR ── */
+  .save-menu-wrap { position: relative; }
+  .save-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 280px;
+    background: var(--paper);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 6px;
+    z-index: 200;
+  }
+  body.theme-nocturno .save-menu { border-color: rgba(255,255,255,0.1); }
+  .save-menu.open { display: block; }
+  .save-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .save-menu-item:hover { background: rgba(0,0,0,0.05); }
+  body.theme-nocturno .save-menu-item:hover { background: rgba(255,255,255,0.06); }
+  .sm-title {
+    font-family: 'Literata', serif;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .sm-desc {
+    font-size: 12px;
+    color: var(--ink-ghost);
+    line-height: 1.3;
+  }
+
   /* ── BARRA LATERAL ── */
   #sidebar {
     position: fixed;
@@ -470,8 +514,23 @@
     <div class="tb-left">
       <img src="Escribir simple. Sin distracciones. (1).png" class="tb-logo-corner" alt="Logo">
       <button class="tb-btn" onclick="goBackToDashboard()">← Inicio</button>
-      <button class="tb-btn" onclick="exportHTML()">Exportar</button>
-      <button class="tb-btn" onclick="exportPDF()">PDF</button>
+      <div class="save-menu-wrap">
+        <button class="tb-btn" onclick="toggleSaveMenu()">Guardar ▾</button>
+        <div id="save-menu" class="save-menu">
+          <button class="save-menu-item" onclick="exportHTML(); closeSaveMenu()">
+            <span class="sm-title">Guardar proyecto</span>
+            <span class="sm-desc">Archivo .html para seguir editando más tarde</span>
+          </button>
+          <button class="save-menu-item" onclick="exportPDF(); closeSaveMenu()">
+            <span class="sm-title">Exportar a PDF</span>
+            <span class="sm-desc">Listo para leer en pantalla, formato A5</span>
+          </button>
+          <button class="save-menu-item" onclick="exportPrintPDF(); closeSaveMenu()">
+            <span class="sm-title">Exportar para imprimir</span>
+            <span class="sm-desc">Márgenes de encuadernación y capítulos en página impar</span>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="tb-meta-center">
       <input type="text" id="meta-title" class="meta-input-title" placeholder="Título del proyecto" oninput="triggerSave(); updateSidebar()">
@@ -812,37 +871,80 @@ ${ch.body.split('\n').filter(l => l.trim()).map(l => `<p>${escHtml(l)}</p>`).joi
   download(html, slugify(title) + '.html', 'text/html');
 }
 
+// ── MENÚ GUARDAR ──
+function toggleSaveMenu() {
+  document.getElementById('save-menu').classList.toggle('open');
+}
+function closeSaveMenu() {
+  document.getElementById('save-menu').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  const wrap = document.querySelector('.save-menu-wrap');
+  if (wrap && !wrap.contains(e.target)) closeSaveMenu();
+});
+
 // ── EXPORT PDF ──
 function exportPDF() {
+  buildBookPDF({ mirrored: false, oddChapterStart: false }).save(slugify(document.getElementById('meta-title').value) + '.pdf');
+}
+
+function exportPrintPDF() {
+  buildBookPDF({ mirrored: true, oddChapterStart: true }).save(slugify(document.getElementById('meta-title').value) + '-impresion.pdf');
+}
+
+function buildBookPDF({ mirrored, oddChapterStart }) {
   const { jsPDF } = window.jspdf;
   const title = document.getElementById('meta-title').value || 'Sin título';
   const author = document.getElementById('meta-author').value || '';
 
   const doc = new jsPDF({ unit: 'mm', format: 'a5', orientation: 'portrait' });
 
-  const marginX = 18;
+  // Márgenes: normal = simétrico. Mirrored = más espacio del lado del lomo.
+  const marginOuter = 14;
+  const marginInner = mirrored ? 22 : 14; // lado del lomo
   const marginTop = 20;
   const marginBottom = 20;
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
-  const maxW = pageW - marginX * 2;
   let y = marginTop;
   let pageNum = 1;
+
+  function marginLeft() {
+    if (!mirrored) return marginOuter;
+    // Página impar (derecha): lomo a la izquierda. Página par: lomo a la derecha.
+    return (pageNum % 2 === 1) ? marginInner : marginOuter;
+  }
+  function marginRight() {
+    if (!mirrored) return marginOuter;
+    return (pageNum % 2 === 1) ? marginOuter : marginInner;
+  }
+  function maxW() { return pageW - marginLeft() - marginRight(); }
+  function pageCenterX() { return marginLeft() + maxW() / 2; }
 
   function addPageNumber() {
     doc.setFont('Times', 'normal');
     doc.setFontSize(9);
     doc.setTextColor(150);
-    doc.text(String(pageNum), pageW / 2, pageH - 8, { align: 'center' });
+    doc.text(String(pageNum), pageCenterX(), pageH - 8, { align: 'center' });
     doc.setTextColor(30);
   }
 
+  function newPage() {
+    addPageNumber();
+    doc.addPage();
+    pageNum++;
+    y = marginTop;
+  }
+
   function checkPageBreak(neededH) {
-    if (y + neededH > pageH - marginBottom) {
-      addPageNumber();
-      doc.addPage();
-      pageNum++;
-      y = marginTop;
+    if (y + neededH > pageH - marginBottom) newPage();
+  }
+
+  function ensureOddPage() {
+    // Si oddChapterStart, cada capítulo debe arrancar en página impar (1, 3, 5...)
+    if (!oddChapterStart) return;
+    if (pageNum % 2 === 0) {
+      newPage(); // página en blanco para llegar a la impar
     }
   }
 
@@ -850,30 +952,32 @@ function exportPDF() {
     doc.setFontSize(fontSize);
     doc.setFont('Times', fontStyle);
     if (color) doc.setTextColor(...color);
-    const lines = doc.splitTextToSize(text, maxW);
+    const lines = doc.splitTextToSize(text, maxW());
     lines.forEach(line => {
       checkPageBreak(fontSize * 0.4);
-      doc.text(line, align === 'center' ? pageW / 2 : marginX, y, { align: align || 'left' });
+      const x = align === 'center' ? pageCenterX() : marginLeft();
+      doc.text(line, x, y, { align: align || 'left' });
       y += fontSize * 0.42;
     });
     if (color) doc.setTextColor(30);
     y += extraSpacingAfter || 0;
   }
 
-  // Portada
+  // Portada (página 1, siempre impar, no afectada por ensureOddPage)
   y = pageH * 0.35;
   writeLine(title, 22, 'bold', 'center', null, 6);
   if (author) writeLine(author, 12, 'italic', 'center', [100,100,100], 0);
-  addPageNumber();
-  doc.addPage(); pageNum++; y = marginTop;
+  newPage();
 
   // Capítulos
   document.querySelectorAll('.chapter').forEach((ch, i) => {
-    if (i > 0) {
+    ensureOddPage();
+
+    if (i > 0 && !oddChapterStart) {
       checkPageBreak(20);
       doc.setFontSize(10);
       doc.setTextColor(180);
-      doc.text('· · ·', pageW / 2, y, { align: 'center' });
+      doc.text('· · ·', pageCenterX(), y, { align: 'center' });
       doc.setTextColor(30);
       y += 12;
     }
@@ -888,10 +992,11 @@ function exportPDF() {
     paragraphs.forEach((para, pi) => {
       doc.setFontSize(11);
       doc.setFont('Times', 'normal');
-      const lines = doc.splitTextToSize(para, maxW - (pi > 0 ? 6 : 0));
+      const indent = pi > 0 ? 6 : 0;
+      const lines = doc.splitTextToSize(para, maxW() - indent);
       lines.forEach((line, li) => {
         checkPageBreak(6);
-        const x = (pi > 0 && li === 0) ? marginX + 6 : marginX;
+        const x = (pi > 0 && li === 0) ? marginLeft() + 6 : marginLeft();
         doc.text(line, x, y);
         y += 5.5;
       });
@@ -901,8 +1006,9 @@ function exportPDF() {
   });
 
   addPageNumber();
-  doc.save(slugify(title) + '.pdf');
+  return doc;
 }
+
 
 // ── IMPORT ──
 function importHTML(event) {
